@@ -1,13 +1,173 @@
+<!doctype html>
 <html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<title>Cohaerens</title>
+	</head>
 
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+	<body>
+		<nav class="navbar navbar-light navbar-expand-md">
+			<a class="navbar-brand" href="/">Cohaerens</a>
+			<button class="navbar-toggler" type="button">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-</body>
-
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Главная</a>
+					</li>
+					<!--
+					<li class="nav-item">
+						<a class="nav-link" href="#">Суточное ПЭС</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Вариации ПЭС</a>
+					</li>
+					-->
+				</ul>
+			</div>
+		</nav>		
+		
+		<main class="container">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="place" class="control-label">Название населенного пункта:</label>
+					<select class="form-control " id="place">
+						<option>Йошкар-Ола</option>
+						<option>Казань</option>
+						<option>Москва</option>
+						<option>Воронеж</option>
+						<option>Минск</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="satellite-system">Вид спутниковой системы:</label>
+					<select class="form-control" id="satellite-system">
+						<option>GPS</option>
+						<option>GLONASS</option>
+						<option>Transit</option>
+						<option>Tsikada</option>
+						<option>BeiDou</option>
+						<option>Galileo</option>
+						<option>DORIS</option>
+						<option>IRNSS</option>
+						<option>QZSS</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="receiver">Модель приемника:</label>
+					<select class="form-control" id="receiver">
+						<option>Javad</option>
+						<option>Leyca</option>
+						<option>Spectra</option>
+						<option>Trible</option>
+						<option>South</option>
+					</select>
+				</div>
+				<label>Диапозон частот, Гц:</label>
+				<div class="form-row">
+					<div class="form-group col-xs-3">
+						<label for="frequency-start">от</label>
+						<input type="text" class="form-control" id="frequency-start" placeholder="0">
+					</div>
+					<div class="form-group col-xs-3">
+						<label for="frequency-end">до</label>
+						<input type="text" class="form-control" id="frequency-end" placeholder="10 000 000">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="datetime">Дата:</label>
+					<input type="date" class="form-control" id="datetime" >
+				</div>
+				<div class="form-group">
+					<label for="tec">Выбор Кр:</label>
+					<select class="form-control" id="tec">
+						<option>0</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+					</select>
+				</div>
+				<label for="frequency-start">Число солнечных пятен, W = k(f+10g):</label>
+				<div class="form-row">
+					<div class="form-group col-xs-3">
+						<input type="text" class="form-control" id="sunspot-count" placeholder="0">
+						<small id="sunspot-count-help" class="form-text text-muted">кол-во наблюдаемых пятен, f</small>
+					</div>
+					<div class="form-group col-xs-3">
+						<input type="text" class="form-control" id="sunspot-group-count" placeholder="0">
+						<small id="sunspot-group-count" class="form-text text-muted">кол-во наблюдаемых групп, g</small>
+					</div>
+					<div class="form-group col-xs-3">
+						<input type="text" class="form-control" id="sunspot-coefficient" placeholder="0">
+						<small id="sunspot-coefficient" class="form-text text-muted">нормировочный коэффициент, k</small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="receiver-fall">Наличие сбоев аппаратуры</label>
+					<select class="form-control" id="receiver-fall">
+						<option>-</option>
+						<option>сбой0</option>
+						<option>сбой1</option>
+						<option>сбой2</option>
+						<option>сбой3</option>
+						<option>сбой4</option>
+						<option>сбой5</option>
+						<option>сбой6</option>
+						<option>сбой7</option>
+						<option>сбой8</option>
+						<option>сбой9</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="temperature">Температура, &#8451</label>
+					<input type="text" class="form-control" id="temperature" placeholder="0">
+					<small id="temperature" class="form-text text-muted">Текст под строкой.</small>
+				</div>
+				<div class="form-group">
+					<label for="atmospheric-pressure">Давление, мм рт.ст.</label>
+					<input type="email" class="form-control" id="atmospheric-pressure" placeholder="0">
+				</div>
+				<div class="form-group">
+					<label for="relative-humidity">Относительная влажность, %.</label>
+					<input type="email" class="form-control" id="relative-humidity" placeholder="70">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Осадки, мм.</label>
+					<input type="email" class="form-control" id="exampleInputEmail1" placeholder="0">
+				</div>
+				<div class="form-group">
+					<label for="inputGroupFile02">Файл ПЭС</label>
+					<div class="input-group">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="inputGroupFile02">
+							<label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+						</div>
+						<div class="input-group-append">
+							<span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Отправить</button>
+			</form>
+		</main>
+		<footer class="footer mt-auto py-3">
+		  <div class="container">
+			<span class="text-muted">Cohaerens 2019</span>
+		  </div>
+		</footer>
+		
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
 </html>
