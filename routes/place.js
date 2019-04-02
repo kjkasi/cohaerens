@@ -4,7 +4,7 @@ var models = require('../models');
 
 /* GET place listing. */
 router.get('/', function(req, res, next) {
-  models.Place.findAll({}).then(places => res.json(users));
+  models.Place.findAll({}).then(places => res.json(places));
 });
 
 router.post('/', function(req, res, next){
