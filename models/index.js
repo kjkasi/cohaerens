@@ -2,7 +2,7 @@ var fs        = require('fs');
 var path      = require('path');
 var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
-var db        = {};
+//var db        = {};
 
 var sequelize = new Sequelize ('d9uond5jp6i5gp', 'axqepdpagxkjdr', 'd9c118d867c325068171bd51d23c6fc849b24bd5aca424dd0e1c801a9da647e9', {
     dialect: 'postgres',
@@ -10,6 +10,11 @@ var sequelize = new Sequelize ('d9uond5jp6i5gp', 'axqepdpagxkjdr', 'd9c118d867c3
     port: '5432',
 });
 
+var models = {
+  Place: sequelize.import('./place'),
+};
+
+/*
 fs
   .readdirSync(__dirname)
   .filter(file => {
@@ -25,8 +30,9 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+*/
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+models.sequelize = sequelize;
+models.Sequelize = Sequelize;
 
-module.exports = db;
+module.exports = models;
