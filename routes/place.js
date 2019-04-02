@@ -4,13 +4,16 @@ var models = require('../models');
 
 /* GET place listing. */
 router.get('/', function(req, res, next) {
-  models.Place.findAll().then(function(places){
-    res.json(places);
-  });
+  models.Place.findAll({}).then(places => res.json(users));
 });
 
 router.post('/', function(req, res, next){
-  res.send('POST place')
+  models.Place.create({
+    Name: req.query.name
+  }).then(function(){
+    console.log(req.query.name);
+    res.redirect('/place');
+  });
 })
 
 module.exports = router;
