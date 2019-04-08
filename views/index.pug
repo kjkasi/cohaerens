@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main(class='container')
+    form(class='form-horizontal')
+      div(class='form-group')
+        label(for='place', class='control-label') Название населенного пункта:
+        select(name='place', class='form-control')
+          each place in places
+            option(value=place.id) #{place.Name}

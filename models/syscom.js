@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-    var Place = sequelize.define('Place',{
+    var SysCom = sequelize.define('SysCom',{
         Name: DataTypes.STRING,
         Desciption: DataTypes.STRING
     });
 
-    return Place;
+    return SysCom;
 };
