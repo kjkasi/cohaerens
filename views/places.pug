@@ -35,8 +35,8 @@ block content
         div(class='col') #{place.createdAt}
         div(class='col') #{place.updatedAt}
         div(class='col')
-          form(action='/places/' + place.id + '/delete', method='post')
-            a(class='btn btn-outline-primary', href='/places/' + place.id) Edit
+          form(action='/place/' + place.id + '/delete', method='post')
+            a(class='btn btn-outline-primary', href='/place/' + place.id) Edit
             button(type='submit', class='btn btn-outline-danger') Delete
     else
       div(class='row')
