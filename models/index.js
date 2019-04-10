@@ -24,6 +24,7 @@ var sequelize = new Sequelize (
 var models = {
   Place: sequelize.import('./place'),
   SysCom: sequelize.import('./syscom'),
+  Freq: sequelize.import('./freq'),
 };
 
 models.sequelize = sequelize;

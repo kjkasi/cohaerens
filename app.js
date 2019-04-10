@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 var placeRouter = require('./routes/place');
 var syscomRouter = require('./routes/syscom');
+var freqRouter = require('./routes/freq');
+var dataRouter = require('./routes/data');
 
 var app = express();
 
@@ -29,6 +31,8 @@ app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/place', placeRouter);
 app.use('/syscom', syscomRouter);
+app.use('/freq', freqRouter);
+app.use('/data', dataRouter);
 
 models.sequelize.sync();
 
