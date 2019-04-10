@@ -10,7 +10,16 @@ var sequelize = new Sequelize ('d9uond5jp6i5gp', 'axqepdpagxkjdr', 'd9c118d867c3
 });
 */
 
-var sequelize = new Sequelize ('postgres://axqepdpagxkjdr:d9c118d867c325068171bd51d23c6fc849b24bd5aca424dd0e1c801a9da647e9@ec2-54-247-85-251.eu-west-1.compute.amazonaws.com:5432/d9uond5jp6i5gp?ssl=true');
+var sequelize = new Sequelize (
+  'postgres://axqepdpagxkjdr:d9c118d867c325068171bd51d23c6fc849b24bd5aca424dd0e1c801a9da647e9@ec2-54-247-85-251.eu-west-1.compute.amazonaws.com:5432/d9uond5jp6i5gp?ssl=true',
+  {
+    pool:{
+      max: 20,
+      idle: 30000,
+      acquire: 60000,
+    }
+  }
+  );
 
 var models = {
   Place: sequelize.import('./place'),
