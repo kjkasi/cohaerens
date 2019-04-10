@@ -35,7 +35,7 @@ router.post('/:id/delete', function(req, res){
 router.post('/:id/put', function(req, res){
   console.log(req.body);
   models.Place.update({Name: req.body.name, Desciption: req.body.desciption}, {where: {id: req.params.id}}).then(function(){
-    res.redirect('/places');
+    res.redirect('/place');
   });
 });
 

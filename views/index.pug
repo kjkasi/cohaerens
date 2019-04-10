@@ -8,3 +8,7 @@ block content
         select(name='place', class='form-control')
           each place in places
             option(value=place.id) #{place.Name}
+        label(for='syscom', class='control-label') Вид спутниковой системы:
+        select(name='syscom', class='form-control')
+          each syscom in syscoms
+            option(value=syscom.id) #{syscom.Name}
