@@ -5,9 +5,15 @@ var models = require('../models');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   async function getAll() {
-    let place = await models.Place.findAll({}).then(); 
-    let syscom = await models.SysCom.findAll({}).then();
-    await res.render('index', {places: place, syscoms: syscom});
+    var place = await models.Place.findAll({}).then(); 
+    var syscom = await models.SysCom.findAll({}).then();
+    var freq = await models.Freq.findAll({}).then();
+
+    await res.render('index', {
+      places: place,
+      syscoms: syscom,
+      freqs: freq
+    });
   }
   getAll();
 });

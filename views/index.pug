@@ -8,7 +8,13 @@ block content
         select(name='place', class='form-control')
           each place in places
             option(value=place.id) #{place.Name}
+      div(class='form-group')            
         label(for='syscom', class='control-label') Вид спутниковой системы:
         select(name='syscom', class='form-control')
           each syscom in syscoms
             option(value=syscom.id) #{syscom.Name}
+      div(class='form-group')            
+        label(for='freq', class='control-label') Диапозон частот:
+        select(name='freq', class='form-control')
+          each freq in freqs
+            option(value=freq.id) #{freq.Name + ' (' + freq.Start / Math.pow(10,9) + ', ' + freq.End / Math.pow(10,9) + ')' } 
