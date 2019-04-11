@@ -10,6 +10,9 @@ var sequelize = new Sequelize ('d9uond5jp6i5gp', 'axqepdpagxkjdr', 'd9c118d867c3
 });
 */
 
+//
+//process.env.DATABASE_URL
+
 var sequelize = new Sequelize (
   'postgres://bhlninkovluwtv:d8a7796924d5d0b9be43f99f0219e9fc82401fa45042593fe32c328a0909c268@ec2-54-247-85-251.eu-west-1.compute.amazonaws.com:5432/dbviv5e4ncrt0m?ssl=true',
   {
