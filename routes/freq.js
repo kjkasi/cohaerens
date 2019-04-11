@@ -5,7 +5,7 @@ var models = require('../models');
 router.get('/', function(req, res) {
   models.Freq.findAll({}).then(function(freq){
     //res.render('syscoms', {syscoms: syscom});
-    res.json(DATABASE_URL);
+    res.json(process.env.DATABASE_URL);
   });
 });
 
