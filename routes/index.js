@@ -4,7 +4,7 @@ var models = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  req.session.views = req.session.views === void 0 ? 0 : req.session.views;
+  //req.session.views = req.session.views === void 0 ? 0 : req.session.views;
   async function getAll() {
     var place = await models.Place.findAll({}).then(); 
     var syscom = await models.SysCom.findAll({}).then();
@@ -14,13 +14,13 @@ router.get('/', function(req, res, next) {
       places: place,
       syscoms: syscom,
       freqs: freq,
-      views: req.session.views,
+      //views: req.session.views,
       path: req.path,
       login: req.session.login,
     });
   }
   getAll();
-  req.session.views++;
+  //req.session.views++;
 });
 
 router.get('/solve', function(req, res, next) {
