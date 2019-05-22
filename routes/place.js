@@ -4,7 +4,10 @@ var models = require('../models');
 
 router.get('/', function(req, res) {
   models.Place.findAll({}).then(function(place){
-    res.render('places', {places: place});
+    res.render('places', {
+      places: place,
+      path: req.baseUrl
+    });
   });
 });
 

@@ -4,7 +4,10 @@ var models = require('../models');
 
 router.get('/', function(req, res) {
   models.SysCom.findAll({}).then(function(syscom){
-    res.render('syscoms', {syscoms: syscom});
+    res.render('syscoms', {
+      syscoms: syscom,
+      path: req.baseUrl
+    });
   });
 });
 
