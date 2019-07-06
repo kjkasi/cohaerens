@@ -6,6 +6,7 @@ var logger = require('morgan');
 var models = require('./models');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
@@ -33,7 +34,11 @@ app.use(session({
   resave: false,
   cookie: {
     maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
-  }
+    //maxAge: 60000 // 1 minute
+  },
+  store: new SequelizeStore({
+    db: models.sequelize
+  })
 }));
 
 
