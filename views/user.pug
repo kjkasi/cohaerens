@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h3(class='p-2 text-center') Обновление пользователя
+  div(class='container-fluid mt-3')
+    form(action='/user/' + user.id + '/put', method='post')
+      div(class='form-group')
+        label(for='id') #
+        input(name='id', class='form-control', readonly, value= user.id)
+      div(class='form-group')
+        label(for='username') Имя
+        input(name='username', class='form-control', value= user.Username)
+      div(class='form-group')
+        label(for='password') Имя
+        input(name='password', class='form-control', value= user.Password)
+      div(class='form-group')
+        label(for='email') Имя
+        input(name='email', class='form-control', value= user.Email)
+      div(class='form-group')
+        label(for='desciption') Описание
+        input(name='desciption', class='form-control', value= user.Desciption)
+      div(class='form-group')
+        label(for='createdAt') Дата создания
+        input(name='createdAt', class='form-control', readonly, value= user.createdAt)
+      div(class='form-group')
+        label(for='updatedAt') Дата обновления
+        input(name='updatedAt', class='form-control', readonly, value= user.updatedAt)
+      div(class='text-center')
+        button(type='submit', class='btn btn-primary') Сохранить
+        a(class='btn btn-secondary', href='/user') Отмена

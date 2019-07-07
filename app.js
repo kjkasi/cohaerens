@@ -41,7 +41,6 @@ app.use(session({
   })
 }));
 
-
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/place', placeRouter);
@@ -50,6 +49,45 @@ app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
 
 models.sequelize.sync();
+
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(
+  new LocalStrategy(function(username, password, done){
+    models.User.findOne({
+      where: {
+        Username: username,
+      }
+    }).then(function(user){
+      if (!user) {
+        return done(null, null);
+      }
+      if (user.Passport != password) {
+        return done(null, null);
+      }
+      console.log(user.Username);
+      return done(null, user);
+    });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  models.User.findByPk(id).then(function(user){
+    done(null, user);
+  })
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.post('/login', passport.authenticate('local'), function(req, res){
+  res.sendStatus(200);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

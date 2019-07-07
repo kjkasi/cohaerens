@@ -2,4 +2,10 @@ extends layout
 
 block content
   div(class='text-center')
-    form(class='form-login')
+    form(class='form-login', action='/login', method='post')
+      h1(class='h3 mb-3 font-weight-normal') Please sign in
+      label(for='inputUsername', class='sr-only') Username
+      input(type='text', id='inputUsername', name='username', class='form-control mb-3', placeholder='Username', required, autofocus, value='admin')
+      label(for='InputPassword', class='sr-only') Password
+      input(type='text', id='InputPassword', name='password', class='form-control mb-3', placeholder='Password', required, value='admin')
+      button(class='btn btn-lg btn-primary btn-block', type="submit") Sign in

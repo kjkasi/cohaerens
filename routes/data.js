@@ -36,6 +36,9 @@ router.get('/', function(req, res) {
       await models.Freq.create({Name: 'Ka', Start: 15400000000, End: 26500000000});
       await models.Freq.create({Name: 'Ka', Start: 27000000000, End: 30200000000});
 
+      //Создаем администратора
+      await models.User.create({Username: 'admin', Password: 'admin', Email: 'admin@localhost.localdomain'});
+
       await res.redirect('/');
   }
   clearAll();
