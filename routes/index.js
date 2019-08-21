@@ -17,6 +17,7 @@ router.get('/', function(req, res) {
       syscoms: syscom,
       freqs: freq,
       path: req.path,
+      login: req.user,
       //login: req.session.login,
       //login: req.session.passport
       //login: {"id":1,"Username":"admin","Password":"admin","Email":"admin@localhost.localdomain","Desciption":null,"createdAt":"2019-07-07T07:23:10.488Z","updatedAt":"2019-07-07T07:23:10.488Z"},
@@ -32,10 +33,11 @@ router.get('/login', function(req, res){
 });
 
 router.get('/admin', function(req, res){
+  console.log(req.user);
   res.render('info', {
     //result: req.user 
-    result: req.session.passport,
-    login: req.isAuthenticated()
+    result: req.user,
+    login: req.user,
   });
 });
 

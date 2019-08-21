@@ -38,11 +38,14 @@ app.use(session({
   cookie: {
     //maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
     maxAge: 60000 // 1 minute
-  },
+  }/*,
   store: new SequelizeStore({
     db: models.sequelize
-  })
+  })*/
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(
   new LocalStrategy(function(username, password, done){
@@ -86,14 +89,16 @@ app.use('/syscom', syscomRouter);
 app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 models.sequelize.sync();
 
-app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){
+
+app.post('/login', 
+  passport.authenticate('local', {  successRedirect: '/',
+                                    failureRedirect: '/login'}));
+
+//app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){
   //console.log('Вход через POST login');
-  res.redirect('/user/' + req.user.id);
+  //res.redirect('/user/' + req.user.id);
   /*
   req.logIn(req.user, function(err) {
     console.log('Вход через req.login');
@@ -101,7 +106,7 @@ app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), 
     res.redirect('/user/' + req.user.id);
   });
   */
-});
+//});
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -115,6 +120,7 @@ app.get('/authorize', passport.authorize('local'), function(req, res){
 });
 
 app.get('/test', function(req, res){
+  console.log(req.user);
   res.render('info', {
     result: req.isAuthenticated()
   });
