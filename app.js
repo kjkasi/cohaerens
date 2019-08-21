@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 var placeRouter = require('./routes/place');
@@ -27,19 +30,54 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(session({
   secret: 'mojietu',
   saveUninitialized: false,
   resave: false,
   cookie: {
-    maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
-    //maxAge: 60000 // 1 minute
+    //maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
+    maxAge: 60000 // 1 minute
   },
   store: new SequelizeStore({
     db: models.sequelize
   })
 }));
+
+passport.use(
+  new LocalStrategy(function(username, password, done){
+    //console.log('LocalStrategy ' + JSON.stringify(username) + ', ' + JSON.stringify(passport));
+    models.User.findOne({
+      where: {
+        Username: username,
+      }
+    }).then(function(user){
+      //console.log('findOne ' + JSON.stringify(user));
+      if (!user) {
+        console.log('!user');
+        return done(null, null);
+      }
+      if (user.Password != password) {
+        console.log('user.Password != password');
+        return done(null, null);
+      }
+      //console.log('Сообщение перед req.login');
+      return done(null, user);
+    });
+  })
+);
+
+passport.serializeUser(function(user, done) {
+  console.log('serializeUser: ' + JSON.stringify(user));
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  console.log('deserializeUser: ' + id);
+  models.User.findByPk(id).then(function(user){
+    done(null, user);
+  })
+});
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
@@ -48,45 +86,38 @@ app.use('/syscom', syscomRouter);
 app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
 
-models.sequelize.sync();
-
-var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
-
-passport.use(
-  new LocalStrategy(function(username, password, done){
-    models.User.findOne({
-      where: {
-        Username: username,
-      }
-    }).then(function(user){
-      if (!user) {
-        return done(null, null);
-      }
-      if (user.Passport != password) {
-        return done(null, null);
-      }
-      console.log(user.Username);
-      return done(null, user);
-    });
-  })
-);
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  models.User.findByPk(id).then(function(user){
-    done(null, user);
-  })
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/login', passport.authenticate('local'), function(req, res){
-  res.sendStatus(200);
+models.sequelize.sync();
+
+app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){
+  //console.log('Вход через POST login');
+  res.redirect('/user/' + req.user.id);
+  /*
+  req.logIn(req.user, function(err) {
+    console.log('Вход через req.login');
+    if (err) { return done(err, null); }
+    res.redirect('/user/' + req.user.id);
+  });
+  */
+});
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+app.get('/authorize', passport.authorize('local'), function(req, res){
+  res.render('info', {
+    result: req.user
+  });
+});
+
+app.get('/test', function(req, res){
+  res.render('info', {
+    result: req.isAuthenticated()
+  });
 });
 
 // catch 404 and forward to error handler

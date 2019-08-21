@@ -2,6 +2,10 @@ extends layout
 
 block content
   div(class='text-center')
+    if result
+      //div(class='alert alert-primary', role='alert')=JSON.stringify(result)
+      textarea(class='form-control', aria-label='With textarea')=JSON.stringify(result)
+
     form(class='form-login', action='/login', method='post')
       h1(class='h3 mb-3 font-weight-normal') Please sign in
       label(for='inputUsername', class='sr-only') Username

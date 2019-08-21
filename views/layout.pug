@@ -27,11 +27,15 @@ html
             a(class='nav-link', href='/data') Заполнение БД
           li(class=path=='/example.html'?'nav-item active':'nav-item')
             a(class='nav-link', href='/example.html') Пример(Статическая страница)
+          li(class='nav-item')
+            a(class='nav-link', href='/test') Test
+          li(class='nav-item')
+            a(class='nav-link', href='/admin') Admin
       if login
-        form(class='form-inline', action='logout', method='get')  
+        form(class='form-inline', action='/logout', method='get')  
           button(class='btn btn-outline-primary', type='submit') Log out
       else
-        form(class='form-inline', action='login', method='get')
+        form(class='form-inline', action='/login', method='get')
           button(class='btn btn-outline-primary', type='submit') Log in
     block content
 
