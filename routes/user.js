@@ -6,7 +6,8 @@ router.get('/', function(req, res) {
   models.User.findAll({}).then(function(user){
     res.render('users', {
       items: user,
-      path: req.baseUrl
+      path: req.baseUrl,
+      login: req.user,
     });
   });
 });

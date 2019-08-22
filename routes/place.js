@@ -6,20 +6,19 @@ router.get('/', function(req, res) {
   models.Place.findAll({}).then(function(place){
     res.render('places', {
       places: place,
-      path: req.baseUrl
+      path: req.baseUrl,
+      login: req.user,
     });
   });
 });
 
 router.get('/:id', function(req, res){
-  //console.log('id: ' + req.params.id);
   models.Place.findOne({where: {id: req.params.id}}).then(function(place){
     res.render('place', {place: place})
   });
 });
 
 router.post('/', function(req, res){
-  //console.log(req.body);
   models.Place.create({
     //Name: req.query.name
     Name: req.body.name,

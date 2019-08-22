@@ -6,7 +6,8 @@ router.get('/', function(req, res) {
   models.SysCom.findAll({}).then(function(syscom){
     res.render('syscoms', {
       syscoms: syscom,
-      path: req.baseUrl
+      path: req.baseUrl,
+      login: req.user,
     });
   });
 });

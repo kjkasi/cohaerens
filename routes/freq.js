@@ -6,7 +6,8 @@ router.get('/', function(req, res) {
   models.Freq.findAll({}).then(function(freq){
     res.render('freqs', {
       items: freq,
-      path: req.baseUrl
+      path: req.baseUrl,
+      login: req.user,
     });
   });
 });

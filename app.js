@@ -36,8 +36,8 @@ app.use(session({
   saveUninitialized: false,
   resave: false,
   cookie: {
-    //maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
-    maxAge: 60000 // 1 minute
+    maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
+    //maxAge: 60000 // 1 minute
   }/*,
   store: new SequelizeStore({
     db: models.sequelize
@@ -49,13 +49,11 @@ app.use(passport.session());
 
 passport.use(
   new LocalStrategy(function(username, password, done){
-    //console.log('LocalStrategy ' + JSON.stringify(username) + ', ' + JSON.stringify(passport));
     models.User.findOne({
       where: {
         Username: username,
       }
     }).then(function(user){
-      //console.log('findOne ' + JSON.stringify(user));
       if (!user) {
         console.log('!user');
         return done(null, null);
@@ -64,7 +62,6 @@ passport.use(
         console.log('user.Password != password');
         return done(null, null);
       }
-      //console.log('Сообщение перед req.login');
       return done(null, user);
     });
   })
@@ -113,16 +110,10 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.get('/authorize', passport.authorize('local'), function(req, res){
+app.get('/authorize', passport.authorize('local', { failureRedirect: '/login'}), function(req, res){
+  console.log('GET authorize');
   res.render('info', {
     result: req.user
-  });
-});
-
-app.get('/test', function(req, res){
-  console.log(req.user);
-  res.render('info', {
-    result: req.isAuthenticated()
   });
 });
 
