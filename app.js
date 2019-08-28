@@ -10,6 +10,7 @@ var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
@@ -46,6 +47,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.use(
   new LocalStrategy(function(username, password, done){
@@ -88,6 +90,11 @@ app.use('/data', dataRouter);
 
 models.sequelize.sync();
 
+app.get('/flash', function(req, res){
+  // Set a flash message by passing the key, followed by the value, to req.flash().
+  req.flash('info', 'Flash is back!')
+  res.redirect('/');
+});
 
 app.post('/login', 
   passport.authenticate('local', {  successRedirect: '/',
