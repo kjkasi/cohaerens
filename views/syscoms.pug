@@ -26,16 +26,16 @@ block content
         div(class='col')
           button(type='submit', class='btn btn-primary') Добавить
 
-    each syscom in syscoms
+    each item, index in items
       div(class='row p-2')
-        div(class='col-1') #{syscom.id}
-        div(class='col') #{syscom.Name}
-        div(class='col') #{syscom.Desciption}
-        div(class='col') #{syscom.createdAt}
-        div(class='col') #{syscom.updatedAt}
+        div(class='col-1') #{index}
+        div(class='col') #{item.Name}
+        div(class='col') #{item.Desciption}
+        div(class='col') #{item.createdAt}
+        div(class='col') #{item.updatedAt}
         div(class='col')
-          form(action='/syscom/' + syscom.id + '/delete', method='post')
-            a(class='btn btn-outline-primary', href='/syscom/' + syscom.id) Edit
+          form(action='/syscom/' + item.id + '/delete', method='post')
+            a(class='btn btn-outline-primary', href='/syscom/' + item.id) Edit
             button(type='submit', class='btn btn-outline-danger') Delete
     else
       div(class='row')

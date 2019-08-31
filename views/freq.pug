@@ -3,7 +3,7 @@ extends layout
 block content
   h3(class='p-2 text-center') Обновление частоты
   div(class='container-fluid mt-3')
-    form(action='/syscom/' + item.id + '/put', method='post')
+    form(action='/freq/' + item.id + '/put', method='post')
       div(class='form-group')
         label(for='id') #
         input(name='id', class='form-control', readonly, value= item.id)

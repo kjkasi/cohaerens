@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+
+var mongoose = require('mongoose');
+var Place = mongoose.model('Place');
+var SysCom = mongoose.model('SysCom');
+var Freq = mongoose.model('Freq');
+var User = mongoose.model('User');
 
 router.get('/', function(req, res) {
-  models.User.findAll({}).then(function(user){
+  User.find({}, function(err, user){
+    if (err) console.log(err);
     res.render('users', {
       items: user,
       path: req.baseUrl,
@@ -13,38 +19,41 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-  models.User.findOne({where: {id: req.params.id}}).then(function(user){
+  User.findById(req.params.id, function(err, user){
+    if (err) console.log(err);
     res.render('user', {item: user})
   });
 });
 
 router.post('/', function(req, res){
-  models.User.create({
+  User.create({
     Username: req.body.username,
     Password: req.body.password,
     Email: req.body.email,
     Desciption: req.body.desciption,
-  }).then(function(){
+    createdAt: Date.now()
+  }, function(err, user){
+    if (err) console.log(err);
     res.redirect('/user');
   });
 });
 
 router.post('/:id/delete', function(req, res){
-  models.User.destroy({where: {id: req.params.id}}).then(function(){
+  User.findByIdAndDelete(req.params.id, function(err, user){
+    if (err) console.log(err);
     res.redirect('/user');
   });
 });
 
 router.post('/:id/put', function(req, res){
-  models.User.update({
+  User.findByIdAndUpdate(req.params.id, {
     Username: req.body.username,
     Password: req.body.password,
     Email: req.body.email,
     Desciption: req.body.desciption,
-  }, {
-    where: {
-      id: req.params.id
-    }}).then(function(){
+    updatedAt: Date.now()
+  }, function(err, user){
+    if (err) console.log(err);
     res.redirect('/user');
   });
 });

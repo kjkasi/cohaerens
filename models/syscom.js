@@ -1,8 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
-    var SysCom = sequelize.define('SysCom',{
-        Name: DataTypes.STRING,
-        Desciption: DataTypes.STRING
-    });
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-    return SysCom;
-};
+var SysCom = new Schema({
+    Name: String,
+    Desciption: String,
+    createdAt: Date,
+    updatedAt: Date
+});
+
+module.exports = mongoose.model('SysCom', SysCom);

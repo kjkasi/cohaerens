@@ -3,14 +3,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var models = require('./models');
 var bodyParser = require('body-parser');
+
+var mongoose = require('mongoose');
 var session = require('express-session');
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
+var MongoStore = require('connect-mongo')(session);
+
+mongoose.connect('mongodb+srv://admin:admin@cluster0-jbzv7.azure.mongodb.net/cohaerens?retryWrites=true&w=majority', {useNewUrlParser: true});
+require('./models/freq');
+require('./models/place');
+require('./models/syscom');
+require('./models/user');
+
 
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
@@ -39,35 +48,33 @@ app.use(session({
   cookie: {
     maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
     //maxAge: 60000 // 1 minute
-  }/*,
-  store: new SequelizeStore({
-    db: models.sequelize
-  })*/
+  },
+  store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+
 passport.use(
   new LocalStrategy(function(username, password, done){
-    models.User.findOne({
-      where: {
-        Username: username,
-      }
-    }).then(function(user){
-      if (!user) {
-        console.log('!user');
-        return done(null, null);
-      }
-      if (user.Password != password) {
-        console.log('user.Password != password');
-        return done(null, null);
-      }
-      return done(null, user);
-    });
+    User
+      .findOne({Username: username})
+      .then(user => {
+        if ((!user) && (user.Password != password)) {
+          return done(null, null);
+        }
+        return done(null, user);
+      })
+      .catch(err => {
+        console.log(err);
+        done(err);
+      });
   })
 );
+
 
 passport.serializeUser(function(user, done) {
   console.log('serializeUser: ' + JSON.stringify(user));
@@ -76,10 +83,11 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   console.log('deserializeUser: ' + id);
-  models.User.findByPk(id).then(function(user){
-    done(null, user);
+  User.findById(id, function(err, user){
+    done(err, user);
   })
 });
+
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
@@ -88,8 +96,7 @@ app.use('/syscom', syscomRouter);
 app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
 
-models.sequelize.sync();
-
+/*
 app.get('/flash', function(req, res){
   // Set a flash message by passing the key, followed by the value, to req.flash().
   req.flash('info', 'Flash is back!')
@@ -98,19 +105,8 @@ app.get('/flash', function(req, res){
 
 app.post('/login', 
   passport.authenticate('local', {  successRedirect: '/',
-                                    failureRedirect: '/login'}));
-
-//app.post('/login', passport.authenticate('local', {failureRedirect: '/login'}), function(req, res){
-  //console.log('Вход через POST login');
-  //res.redirect('/user/' + req.user.id);
-  /*
-  req.logIn(req.user, function(err) {
-    console.log('Вход через req.login');
-    if (err) { return done(err, null); }
-    res.redirect('/user/' + req.user.id);
-  });
-  */
-//});
+                                    failureRedirect: '/login'})
+);
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -123,6 +119,8 @@ app.get('/authorize', passport.authorize('local', { failureRedirect: '/login'}),
     result: req.user
   });
 });
+
+*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

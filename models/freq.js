@@ -1,11 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-    var Freq = sequelize.define('Freq',{
-        Name: DataTypes.STRING,
-        Desciption: DataTypes.STRING,
-        //Range: DataTypes.INTEGER
-        Start: DataTypes.BIGINT,
-        End: DataTypes.BIGINT
-    });
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-    return Freq;
-};
+var Freq = new Schema({
+    Name: String,
+    Desciption: String,
+    Start: Number,
+    End: Number,
+    createdAt: Date,
+    updatedAt: Date
+});
+
+module.exports = mongoose.model('Freq', Freq);

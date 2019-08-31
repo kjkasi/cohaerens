@@ -1,9 +1,15 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+
+var mongoose = require('mongoose');
+var Place = mongoose.model('Place');
+var SysCom = mongoose.model('SysCom');
+var Freq = mongoose.model('Freq');
+var User = mongoose.model('User');
 
 router.get('/', function(req, res) {
-  models.Freq.findAll({}).then(function(freq){
+  Freq.find({}, function(err, freq){
+    if (err) console.log(err);
     res.render('freqs', {
       items: freq,
       path: req.baseUrl,
@@ -13,30 +19,39 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-  models.Freq.findOne({where: {id: req.params.id}}).then(function(freq){
+  Freq.findById(req.params.id, function(err, freq){
+    if (err) console.log(err);
     res.render('freq', {item: freq})
   });
 });
 
 router.post('/', function(req, res){
-  models.Freq.create({
+  Freq.create({
     Name: req.body.name,
     Desciption: req.body.desciption,
     Start: req.body.start * Math.pow(10,9),
-    End: req.body.end * Math.pow(10,9)
-  }).then(function(){
+    End: req.body.end * Math.pow(10,9),
+    createdAt: Date.now()
+  }, function(err, freq){
+    if (err) console.log(err);
     res.redirect('/freq');
   });
 });
 
 router.post('/:id/delete', function(req, res){
-  models.Freq.destroy({where: {id: req.params.id}}).then(function(){
+  Freq.findByIdAndDelete(req.params.id, function(err, freq){
+    if (err) console.log(err);
     res.redirect('/freq');
   });
 });
 
 router.post('/:id/put', function(req, res){
-  models.Freq.update({Name: req.body.name, Desciption: req.body.desciption}, {where: {id: req.params.id}}).then(function(){
+  Freq.findByIdAndUpdate(req.params.id, {
+    Name: req.body.name,
+    Desciption: req.body.desciption,
+    updatedAt: Date.now()
+  }, function(err, freq){
+    if (err) console.log(err);
     res.redirect('/freq');
   });
 });

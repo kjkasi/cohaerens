@@ -27,16 +27,16 @@ block content
         div(class='col')
           button(type='submit', class='btn btn-primary') Добавить
 
-    each place in places
+    each item, index in items
       div(class='row p-2')
-        div(class='col-1') #{place.id}
-        div(class='col') #{place.Name}
-        div(class='col') #{place.Desciption}
-        div(class='col') #{place.createdAt}
-        div(class='col') #{place.updatedAt}
+        div(class='col-1') #{index}
+        div(class='col') #{item.Name}
+        div(class='col') #{item.Desciption}
+        div(class='col') #{item.createdAt}
+        div(class='col') #{item.updatedAt}
         div(class='col')
-          form(action='/place/' + place.id + '/delete', method='post')
-            a(class='btn btn-outline-primary', href='/place/' + place.id) Edit
+          form(action='/place/' + item.id + '/delete', method='post')
+            a(class='btn btn-outline-primary', href='/place/' + item.id) Edit
             button(type='submit', class='btn btn-outline-danger') Delete
     else
       div(class='row')

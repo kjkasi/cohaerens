@@ -1,8 +1,11 @@
-module.exports = (sequelize, DataTypes) => {
-    var Place = sequelize.define('Place',{
-        Name: DataTypes.STRING,
-        Desciption: DataTypes.STRING
-    });
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-    return Place;
-};
+var Place = new Schema({
+    Name: String,
+    Desciption: String,
+    createdAt: Date,
+    updatedAt: Date
+});
+
+module.exports = mongoose.model('Place', Place);

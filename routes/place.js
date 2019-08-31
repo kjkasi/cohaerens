@@ -1,42 +1,55 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+
+var mongoose = require('mongoose');
+var Place = mongoose.model('Place');
+var SysCom = mongoose.model('SysCom');
+var Freq = mongoose.model('Freq');
+var User = mongoose.model('User');
 
 router.get('/', function(req, res) {
-  models.Place.findAll({}).then(function(place){
+  Place.find({}, function(err, place){
+    if (err) console.log(err);
     res.render('places', {
-      places: place,
+      items: place,
       path: req.baseUrl,
-      login: req.user,
+      login: req.user
     });
   });
 });
 
 router.get('/:id', function(req, res){
-  models.Place.findOne({where: {id: req.params.id}}).then(function(place){
-    res.render('place', {place: place})
+  Place.findById(req.params.id, function(err, place){
+    if (err) console.log(err);
+    res.render('place', {item: place});
   });
 });
 
 router.post('/', function(req, res){
-  models.Place.create({
-    //Name: req.query.name
+  Place.create({
     Name: req.body.name,
-    Desciption: req.body.desciption
-  }).then(function(){
+    Desciption: req.body.desciption,
+    createdAt: Date.now()
+  }, function(err, place){
+    if (err) console.log(err);
     res.redirect('/place');
   });
 })
 
 router.post('/:id/delete', function(req, res){
-  models.Place.destroy({where: {id: req.params.id}}).then(function(){
+  Place.findByIdAndDelete(req.params.id, function(err, place){
+    if (err) console.log(err);
     res.redirect('/place');
   });
 });
 
 router.post('/:id/put', function(req, res){
-  console.log(req.body);
-  models.Place.update({Name: req.body.name, Desciption: req.body.desciption}, {where: {id: req.params.id}}).then(function(){
+  Place.findByIdAndUpdate(req.params.id, {
+    Name: req.body.name,
+    Desciption: req.body.desciption,
+    updatedAt: Date.now()
+  }, function(err, place){
+    if (err) console.log(err);
     res.redirect('/place');
   });
 });

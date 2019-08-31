@@ -1,40 +1,55 @@
 var express = require('express');
 var router = express.Router();
-var models = require('../models');
+
+var mongoose = require('mongoose');
+var Place = mongoose.model('Place');
+var SysCom = mongoose.model('SysCom');
+var Freq = mongoose.model('Freq');
+var User = mongoose.model('User');
 
 router.get('/', function(req, res) {
-  models.SysCom.findAll({}).then(function(syscom){
+  SysCom.find({}, function(err, syscom){
+    if (err) console.log(err);
     res.render('syscoms', {
-      syscoms: syscom,
+      items: syscom,
       path: req.baseUrl,
-      login: req.user,
+      login: req.user
     });
   });
 });
 
 router.get('/:id', function(req, res){
-  models.SysCom.findOne({where: {id: req.params.id}}).then(function(syscom){
-    res.render('syscom', {syscoms: syscom})
+  SysCom.findById(req.params.id, function(err, syscom){
+    if (err) console.log(err);
+    res.render('syscom', {item: syscom})
   });
 });
 
 router.post('/', function(req, res){
-  models.SysCom.create({
+  SysCom.create({
     Name: req.body.name,
-    Desciption: req.body.desciption
-  }).then(function(){
+    Desciption: req.body.desciption,
+    createdAt: Date.now()
+  }, function(err, syscom){
+    if (err) console.log(err);
     res.redirect('/syscom');
   });
 });
 
 router.post('/:id/delete', function(req, res){
-  models.SysCom.destroy({where: {id: req.params.id}}).then(function(){
+  SysCom.findByIdAndDelete(req.params.id, function(err, syscom){
+    if (err) console.log(err);
     res.redirect('/syscom');
   });
 });
 
 router.post('/:id/put', function(req, res){
-  models.SysCom.update({Name: req.body.name, Desciption: req.body.desciption}, {where: {id: req.params.id}}).then(function(){
+  SysCom.findByIdAndUpdate(req.params.id, {
+    Name: req.body.name,
+    Desciption: req.body.desciption,
+    updatedAt: Date.now()
+  }, function(err, syscom){
+    if (err) console.log(err);
     res.redirect('/syscom');
   });
 });

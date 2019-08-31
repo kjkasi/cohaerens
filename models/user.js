@@ -1,10 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-    var User = sequelize.define('User',{
-        Username: DataTypes.STRING,
-        Password: DataTypes.STRING,
-        Email: DataTypes.STRING,
-        Desciption: DataTypes.STRING
-    });
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-    return User;
-};
+var User = new Schema({
+    Username: String,
+    Password: String,
+    Email: String,
+    Desciption: String,
+    createdAt: Date,
+    updatedAt: Date
+});
+
+module.exports = mongoose.model('User', User);
