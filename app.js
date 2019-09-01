@@ -15,6 +15,11 @@ require('./models/place');
 require('./models/syscom');
 require('./models/user');
 
+var Place = mongoose.model('Place');
+var SysCom = mongoose.model('SysCom');
+var Freq = mongoose.model('Freq');
+var User = mongoose.model('User');
+
 
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
@@ -55,22 +60,20 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+//app.use(flash());
 
 
 passport.use(
   new LocalStrategy(function(username, password, done){
-    User
-      .findOne({Username: username})
-      .then(user => {
+    User.findOne({Username: username}, function(err, user) {
+        if (err) {
+          console.log(err);
+          done(err, null);
+        }
         if ((!user) && (user.Password != password)) {
           return done(null, null);
         }
         return done(null, user);
-      })
-      .catch(err => {
-        console.log(err);
-        done(err);
       });
   })
 );
@@ -84,6 +87,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   console.log('deserializeUser: ' + id);
   User.findById(id, function(err, user){
+    if (err) console.log(err);
     done(err, user);
   })
 });
@@ -102,6 +106,7 @@ app.get('/flash', function(req, res){
   req.flash('info', 'Flash is back!')
   res.redirect('/');
 });
+*/
 
 app.post('/login', 
   passport.authenticate('local', {  successRedirect: '/',
@@ -119,8 +124,6 @@ app.get('/authorize', passport.authorize('local', { failureRedirect: '/login'}),
     result: req.user
   });
 });
-
-*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
