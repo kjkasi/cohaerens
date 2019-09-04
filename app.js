@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var mongoose = require('mongoose');
-var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0-jbzv7.azure.mongodb.net/cohaerens?retryWrites=true&w=majority', {useNewUrlParser: true});
 require('./models/freq');
@@ -15,23 +15,23 @@ require('./models/place');
 require('./models/syscom');
 require('./models/user');
 
-var Place = mongoose.model('Place');
-var SysCom = mongoose.model('SysCom');
-var Freq = mongoose.model('Freq');
-var User = mongoose.model('User');
+const Place = mongoose.model('Place');
+const SysCom = mongoose.model('SysCom');
+const Freq = mongoose.model('Freq');
+const User = mongoose.model('User');
 
 
-var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
-var flash = require('connect-flash');
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy;
+const flash = require('connect-flash');
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/user');
-var placeRouter = require('./routes/place');
-var syscomRouter = require('./routes/syscom');
-var freqRouter = require('./routes/freq');
-var dataRouter = require('./routes/data');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/user');
+const placeRouter = require('./routes/place');
+const syscomRouter = require('./routes/syscom');
+const freqRouter = require('./routes/freq');
+const dataRouter = require('./routes/data');
 
 var app = express();
 

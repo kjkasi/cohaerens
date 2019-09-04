@@ -1,17 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-var mongoose = require('mongoose');
-var Place = mongoose.model('Place');
-var SysCom = mongoose.model('SysCom');
-var Freq = mongoose.model('Freq');
-var User = mongoose.model('User');
+const mongoose = require('mongoose');
+const Place = mongoose.model('Place');
+const SysCom = mongoose.model('SysCom');
+const Freq = mongoose.model('Freq');
+const User = mongoose.model('User');
 
 router.get('/', function(req, res) {
   async function getAll() {
-    var place = await Place.find(); 
-    var syscom = await SysCom.find();
-    var freq = await Freq.find();
+    const place = await Place.find(); 
+    const syscom = await SysCom.find();
+    const freq = await Freq.find();
 
     await res.render('index', {
       places: place,
