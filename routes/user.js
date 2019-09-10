@@ -6,8 +6,10 @@ const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
 const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
+const passport = require('passport');
+const Ensure = require('connect-ensure-login');
 
-router.get('/', function(req, res) {
+router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
   User.find({}, function(err, user){
     if (err) console.log(err);
     res.render('users', {

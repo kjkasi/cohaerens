@@ -6,8 +6,10 @@ const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
 const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
+const passport = require('passport');
+var Ensure = require('connect-ensure-login');
 
-router.get('/', function(req, res) {
+router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
   async function clearAll() {
       //Принудительно удаляем все таблицы
       await Place.deleteMany();
@@ -45,7 +47,7 @@ router.get('/', function(req, res) {
       await Freq.create({Name: 'Ka', Start: 27000000000, End: 30200000000});
 
       //Создаем администратора
-      await User.create({Username: 'admin', Password: 'admin', Email: 'admin@localhost.localdomain'});
+      await User.create({username: 'admin', password: 'admin', Email: 'admin@localhost.localdomain'});
 
       await res.redirect('/');
   }

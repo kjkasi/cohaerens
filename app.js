@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const Ensure = require('connect-ensure-login');
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0-jbzv7.azure.mongodb.net/cohaerens?retryWrites=true&w=majority', {useNewUrlParser: true});
 require('./models/freq');
@@ -21,17 +22,38 @@ const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
 
 
-const passport = require('passport')
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const flash = require('connect-flash');
+//const flash = require('connect-flash');
 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (user.password != password) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/user');
-const placeRouter = require('./routes/place');
-const syscomRouter = require('./routes/syscom');
-const freqRouter = require('./routes/freq');
-const dataRouter = require('./routes/data');
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user){
+    if (err) console.log(err);
+    done(err, user);
+  })
+});
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/user');
+var placeRouter = require('./routes/place');
+var syscomRouter = require('./routes/syscom');
+var freqRouter = require('./routes/freq');
+var dataRouter = require('./routes/data');
 
 var app = express();
 
@@ -54,44 +76,12 @@ app.use(session({
     maxAge: 3600000 //1 hour = 60 minutes = 60 × 60 seconds = 3600 seconds = 3600 × 1000 milliseconds = 3,600,000 ms.
     //maxAge: 60000 // 1 minute
   },
-  store: new MongoStore({mongooseConnection: mongoose.connection})
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
 }));
-
 
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(flash());
-
-
-passport.use(
-  new LocalStrategy(function(username, password, done){
-    User.findOne({Username: username}, function(err, user) {
-        if (err) {
-          console.log(err);
-          done(err, null);
-        }
-        if ((!user) && (user.Password != password)) {
-          return done(null, null);
-        }
-        return done(null, user);
-      });
-  })
-);
-
-
-passport.serializeUser(function(user, done) {
-  console.log('serializeUser: ' + JSON.stringify(user));
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  console.log('deserializeUser: ' + id);
-  User.findById(id, function(err, user){
-    if (err) console.log(err);
-    done(err, user);
-  })
-});
-
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
