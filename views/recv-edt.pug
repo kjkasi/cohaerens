@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h3(class='p-2 text-center') Обновление приёмника
+  div(class='container-fluid mt-3')
+    form(action='/recv/' + item.id + '/put', method='post')
+      div(class='form-group')
+        label(for='id') #
+        input(name='id', class='form-control', readonly, value= item.id)
+      div(class='form-group')
+        label(for='name') Имя
+        input(name='name', class='form-control', value= item.Name)
+      div(class='form-group')
+        label(for='desciption') Описание
+        input(name='desciption', class='form-control', value= item.Desciption)
+      div(class='form-group')
+        label(for='createdAt') Дата создания
+        input(name='createdAt', class='form-control', readonly, value= item.createdAt)
+      div(class='form-group')
+        label(for='updatedAt') Дата обновления
+        input(name='updatedAt', class='form-control', readonly, value= item.updatedAt)
+      div(class='text-center')
+        button(type='submit', class='btn btn-primary') Сохранить
+        a(class='btn btn-secondary', href='/recv') Отмена

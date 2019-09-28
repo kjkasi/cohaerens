@@ -6,6 +6,7 @@ const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
 const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
+const Recv = mongoose.model('Recv');
 const passport = require('passport');
 const Ensure = require('connect-ensure-login');
 
@@ -14,11 +15,13 @@ router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
     const place = await Place.find(); 
     const syscom = await SysCom.find();
     const freq = await Freq.find();
+    const recv = await Recv.find();
 
     await res.render('index', {
       places: place,
       syscoms: syscom,
       freqs: freq,
+      recvs: recv,
       path: req.path,
       login: req.user,
     });

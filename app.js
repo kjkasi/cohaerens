@@ -15,6 +15,7 @@ require('./models/freq');
 require('./models/place');
 require('./models/syscom');
 require('./models/user');
+require('./models/recv');
 
 const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
@@ -48,12 +49,13 @@ passport.deserializeUser(function(id, done) {
   })
 });
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/user');
-var placeRouter = require('./routes/place');
-var syscomRouter = require('./routes/syscom');
-var freqRouter = require('./routes/freq');
-var dataRouter = require('./routes/data');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/user');
+const placeRouter = require('./routes/place');
+const syscomRouter = require('./routes/syscom');
+const freqRouter = require('./routes/freq');
+const dataRouter = require('./routes/data');
+const recvRouter = require('./routes/recv');
 
 var app = express();
 
@@ -89,6 +91,7 @@ app.use('/place', placeRouter);
 app.use('/syscom', syscomRouter);
 app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
+app.use('/recv', recvRouter);
 
 /*
 app.get('/flash', function(req, res){

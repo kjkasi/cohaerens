@@ -6,6 +6,8 @@ const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
 const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
+const Recv = mongoose.model('Recv');
+
 const passport = require('passport');
 var Ensure = require('connect-ensure-login');
 
@@ -45,6 +47,13 @@ router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
       await Freq.create({Name: 'Ku', Start: 12750000000, End: 14800000000});
       await Freq.create({Name: 'Ka', Start: 15400000000, End: 26500000000});
       await Freq.create({Name: 'Ka', Start: 27000000000, End: 30200000000});
+
+      //Создаем список приёмников
+      await Recv.create({Name: 'Javad'});
+      await Recv.create({Name: 'Leyca'});
+      await Recv.create({Name: 'Spectra'});
+      await Recv.create({Name: 'Trible'});
+      await Recv.create({Name: 'South'});
 
       //Создаем администратора
       await User.create({username: 'admin', password: 'admin', Email: 'admin@localhost.localdomain'});

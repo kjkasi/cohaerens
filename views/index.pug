@@ -7,16 +7,74 @@ block content
     form(class='form-horizontal')
       div(class='form-group')
         label(for='place', class='control-label') Название населенного пункта:
-        select(name='place', class='form-control')
+        select(name='place', class='form-control form-control-sm')
           each place in places
             option(value=place.id) #{place.Name}
       div(class='form-group')            
         label(for='syscom', class='control-label') Вид спутниковой системы:
-        select(name='syscom', class='form-control')
+        select(name='syscom', class='form-control form-control-sm')
           each syscom in syscoms
             option(value=syscom.id) #{syscom.Name}
       div(class='form-group')            
+        label(for='recv', class='control-label') Модель приёмника:
+        select(name='recv', class='form-control form-control-sm')
+          each recv in recvs
+            option(value=recv.id) #{recv.Name}
+      div(class='form-group')            
         label(for='freq', class='control-label') Диапозон частот:
-        select(name='freq', class='form-control')
+        select(name='freq', class='form-control form-control-sm')
           each freq in freqs
-            option(value=freq.id) #{freq.Name + ' (' + freq.Start / Math.pow(10,9) + ', ' + freq.End / Math.pow(10,9) + ')' } 
+            option(value=freq.id) #{freq.Name + ' (' + freq.Start / Math.pow(10,9) + ', ' + freq.End / Math.pow(10,9) + ')' }
+      div(class='form-group')
+        label(for='datetime') Дата:
+        input(type='date', class='form-control', id='datetime')
+      div(class='form-group')
+        label(for='tec') Выбор Кр:
+        select(name='tec', class='form-control form-control-sm')
+          option 0
+          option 1
+          option 2
+          option 3
+          option 4
+          option 5
+          option 6
+          option 7
+          option 8
+          option 9
+      div(class='form-group')
+        label(for='frequency-start') Число солнечных пятен, W = k(f+10g):
+        div(class='form-row')
+          div(class='form-group col-xs-3')
+            input(type='text' class='form-control', id='sunspot-count', placeholder='0')
+            small(id='sunspot-count-help', class='form-text text-muted') кол-во наблюдаемых пятен, f
+          div(class='form-group col-xs-3')
+            input(type='text', class='form-control', id='sunspot-group-count', placeholder='0')
+            small(id='sunspot-group-count', class='form-text text-muted') кол-во наблюдаемых групп, g
+          div(class='form-group col-xs-3')
+            input(type='text', class='form-control', id='sunspot-coefficient', placeholder='0')
+            small(id='sunspot-coefficient', class='form-text text-muted') нормировочный коэффициент, k
+      div(class='form-group')
+        label(for='receiver-fall') Наличие сбоев аппаратуры
+        select(class='form-control form-control-sm', id='receiver-fall')
+          option -
+          option сбой0
+          option сбой1
+          option сбой2
+          option сбой3
+          option сбой4
+          option сбой5
+          option сбой6
+          option сбой7
+          option сбой8
+          option сбой9
+      div(class='form-group')
+        label(for='temperature') Температура, &#8451
+          input(type='text', class='form-control', id='temperature', placeholder='0')
+          small(id='temperature', class='form-text text-muted') Текст под строкой.
+      div(class='form-group')
+        label(for='atmospheric-pressure') Давление, мм рт.ст.
+        input(type='text', class='form-control', id='atmospheric-pressure', placeholder='0')
+      div(class='form-group')
+        label(for='relative-humidity') Относительная влажность, %.
+        input(type='email', class='form-control', id='relative-humidity', placeholder='70')
+      button(type='submit', class='btn btn-primary') Отправить
