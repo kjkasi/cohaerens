@@ -1,15 +1,15 @@
 extends layout
 
 block content
-  div(class='text-center')
+  div(class='container')
     if result
       //div(class='alert alert-primary', role='alert')=JSON.stringify(result)
       textarea(class='form-control', aria-label='With textarea')=JSON.stringify(result)
 
     form(class='form-login', action='/login', method='post')
-      h1(class='h3 mb-3 font-weight-normal') Please sign in
-      label(for='inputUsername', class='sr-only') Username
+      h1(class='h3 mb-3 font-weight-normal') Введите имя пользователя и пароль
+      label(for='inputUsername', class='sr-only') Имя пользователя
       input(type='text', id='inputUsername', name='username', class='form-control mb-3', placeholder='Username', required, autofocus, value='admin')
-      label(for='InputPassword', class='sr-only') Password
+      label(for='InputPassword', class='sr-only') Пароль
       input(type='text', id='InputPassword', name='password', class='form-control mb-3', placeholder='Password', required, value='admin')
-      button(class='btn btn-lg btn-primary btn-block', type="submit") Sign in
+      button(class='btn btn-lg btn-primary btn-block', type="submit") Войти

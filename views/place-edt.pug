@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h3(class='p-2 text-center') Обновление места
+  div(class='container')
+    form(action='/place/' + item.id + '/put', method='post')
+      div(class='form-group')
+        label(for='id') #
+        input(name='id', class='form-control form-control-sm', readonly, value= item.id)
+      div(class='form-group')
+        label(for='name') Имя
+        input(name='name', class='form-control form-control-sm', value= item.Name)
+      div(class='form-group')
+        label(for='desciption') Описание
+        input(name='desciption', class='form-control form-control-sm', value= item.Desciption)
+      div(class='form-group')
+        label(for='createdAt') Дата создания
+        input(name='createdAt', class='form-control form-control-sm', readonly, value= item.createdAt)
+      div(class='form-group')
+        label(for='updatedAt') Дата обновления
+        input(name='updatedAt', class='form-control form-control-sm', readonly, value= item.updatedAt)
+    
+      div(class='form-group row')
+        button(type='submit', class='btn btn-success btn-sm') Сохранить
+        div() &nbsp
+        a(class='btn btn-secondary btn-sm', href='/place') Отмена

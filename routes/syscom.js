@@ -10,10 +10,10 @@ const passport = require('passport');
 const Ensure = require('connect-ensure-login');
 
 router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
-  SysCom.find({}, function(err, syscom){
+  SysCom.find({}, function(err, items){
     if (err) console.log(err);
-    res.render('syscoms', {
-      items: syscom,
+    res.render('syscom', {
+      items: items,
       path: req.baseUrl,
       login: req.user
     });
@@ -21,9 +21,9 @@ router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-  SysCom.findById(req.params.id, function(err, syscom){
+  SysCom.findById(req.params.id, function(err, item){
     if (err) console.log(err);
-    res.render('syscom', {item: syscom})
+    res.render('syscom-edt', {item: item})
   });
 });
 
@@ -32,14 +32,14 @@ router.post('/', function(req, res){
     Name: req.body.name,
     Desciption: req.body.desciption,
     createdAt: Date.now()
-  }, function(err, syscom){
+  }, function(err, item){
     if (err) console.log(err);
     res.redirect('/syscom');
   });
 });
 
 router.post('/:id/delete', function(req, res){
-  SysCom.findByIdAndDelete(req.params.id, function(err, syscom){
+  SysCom.findByIdAndDelete(req.params.id, function(err, item){
     if (err) console.log(err);
     res.redirect('/syscom');
   });
@@ -50,7 +50,7 @@ router.post('/:id/put', function(req, res){
     Name: req.body.name,
     Desciption: req.body.desciption,
     updatedAt: Date.now()
-  }, function(err, syscom){
+  }, function(err, item){
     if (err) console.log(err);
     res.redirect('/syscom');
   });

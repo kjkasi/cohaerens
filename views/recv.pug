@@ -2,7 +2,7 @@ extends layout
 
 block content
   h3(class='p-2 text-center') Список моделей приемников
-  div(class='container-fluid mt-3')
+  div(class='container')
     div(class='row')
       div(class='col-1 font-weight-bold') #
       div(class='col font-weight-bold') Имя
@@ -14,17 +14,17 @@ block content
     form(action='/recv', method='post')
       div(class='row p-2')
         div(class='col-1')
-          input(name='id', class='form-control', disabled)
+          input(name='id', class='form-control form-control-sm', disabled)
         div(class='col')
-          input(name='name', class='form-control')
+          input(name='name', class='form-control form-control-sm')
         div(class='col')
-          input(name='desciption', class='form-control')
+          input(name='desciption', class='form-control form-control-sm')
         div(class='col')
-          input(name='createdAt', class='form-control', disabled)
+          input(name='createdAt', class='form-control form-control-sm', disabled)
         div(class='col')
-          input(name='updatedAt', class='form-control', disabled)
+          input(name='updatedAt', class='form-control form-control-sm', disabled)
         div(class='col')
-          button(type='submit', class='btn btn-primary') Добавить
+          button(type='submit', class='btn btn-outline-success btn-sm') Добавить
 
     each item, index in items
       div(class='row p-2')
@@ -35,8 +35,10 @@ block content
         div(class='col') #{item.updatedAt}
         div(class='col')
           form(action='/recv/' + item.id + '/delete', method='post')
-            a(class='btn btn-outline-primary', href='/recv/' + item.id) Edit
-            button(type='submit', class='btn btn-outline-danger') Delete
+            div(class='form-group row')
+              a(class='btn btn-outline-warning btn-sm', href='/recv/' + item.id) Edit
+              div() &nbsp
+              button(type='submit', class='btn btn-outline-danger btn-sm') Delete
     else
       div(class='row')
         div(class='col text-center p-2') No Data 

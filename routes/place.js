@@ -10,10 +10,10 @@ const passport = require('passport');
 const Ensure = require('connect-ensure-login');
 
 router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
-  Place.find({}, function(err, place){
+  Place.find({}, function(err, items){
     if (err) console.log(err);
-    res.render('places', {
-      items: place,
+    res.render('place', {
+      items: items,
       path: req.baseUrl,
       login: req.user
     });
@@ -21,9 +21,10 @@ router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-  Place.findById(req.params.id, function(err, place){
+  Place.findById(req.params.id, function(err, item){
     if (err) console.log(err);
-    res.render('place', {item: place});
+    res.render('place-edt', {
+      item: item});
   });
 });
 

@@ -1,24 +1,44 @@
 extends layout
 
 block content
-  h3(class='p-2 text-center') Обновление места
-  div(class='container-fluid mt-3')
-    form(action='/syscom/' + item.id + '/put', method='post')
-      div(class='form-group')
-        label(for='id') #
-        input(name='id', class='form-control', readonly, value= item.id)
-      div(class='form-group')
-        label(for='name') Имя
-        input(name='name', class='form-control', value= item.Name)
-      div(class='form-group')
-        label(for='desciption') Описание
-        input(name='desciption', class='form-control', value= item.Desciption)
-      div(class='form-group')
-        label(for='createdAt') Дата создания
-        input(name='createdAt', class='form-control', readonly, value= item.createdAt)
-      div(class='form-group')
-        label(for='updatedAt') Дата обновления
-        input(name='updatedAt', class='form-control', readonly, value= item.updatedAt)
-      div(class='text-center')
-        button(type='submit', class='btn btn-primary') Сохранить
-        a(class='btn btn-secondary', href='/syscom') Отмена
+  h3(class='p-2 text-center') Список систем связи
+  div(class='container')
+    div(class='row')
+      div(class='col-1 font-weight-bold') #
+      div(class='col font-weight-bold') Имя
+      div(class='col font-weight-bold') Описание
+      div(class='col font-weight-bold') Дата создания
+      div(class='col font-weight-bold') Дата обновления
+      div(class='col')
+
+    form(action='/syscom', method='post')
+      div(class='row p-2')
+        div(class='col-1')
+          input(name='id', class='form-control form-control-sm', disabled)
+        div(class='col')
+          input(name='name', class='form-control form-control-sm')
+        div(class='col')
+          input(name='desciption', class='form-control form-control-sm')
+        div(class='col')
+          input(name='createdAt', class='form-control form-control-sm', disabled)
+        div(class='col')
+          input(name='updatedAt', class='form-control form-control-sm', disabled)
+        div(class='col')
+          button(type='submit', class='btn btn-outline-success btn-sm') Добавить
+
+    each item, index in items
+      div(class='row p-2')
+        div(class='col-1') #{index}
+        div(class='col') #{item.Name}
+        div(class='col') #{item.Desciption}
+        div(class='col') #{item.createdAt}
+        div(class='col') #{item.updatedAt}
+        div(class='col')
+          form(action='/syscom/' + item.id + '/delete', method='post')
+            div(class='form-group row')
+              a(class='btn btn-outline-warning btn-sm', href='/syscom/' + item.id) Редактировать
+              div() &nbsp
+              button(type='submit', class='btn btn-outline-danger btn-sm') Удалить
+    else
+      div(class='row')
+        div(class='col text-center p-2') Нет данных 

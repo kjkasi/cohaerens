@@ -1,30 +1,52 @@
 extends layout
 
 block content
-  h3(class='p-2 text-center') Обновление пользователя
-  div(class='container-fluid mt-3')
-    form(action='/user/' + item.id + '/put', method='post')
-      div(class='form-group')
-        label(for='id') #
-        input(name='id', class='form-control', readonly, value= item.id)
-      div(class='form-group')
-        label(for='username') Имя
-        input(name='username', class='form-control', value= item.Username)
-      div(class='form-group')
-        label(for='password') Имя
-        input(name='password', class='form-control', value= item.Password)
-      div(class='form-group')
-        label(for='email') Имя
-        input(name='email', class='form-control', value= item.Email)
-      div(class='form-group')
-        label(for='desciption') Описание
-        input(name='desciption', class='form-control', value= item.Desciption)
-      div(class='form-group')
-        label(for='createdAt') Дата создания
-        input(name='createdAt', class='form-control', readonly, value= item.createdAt)
-      div(class='form-group')
-        label(for='updatedAt') Дата обновления
-        input(name='updatedAt', class='form-control', readonly, value= item.updatedAt)
-      div(class='text-center')
-        button(type='submit', class='btn btn-primary') Сохранить
-        a(class='btn btn-secondary', href='/user') Отмена
+  h3(class='p-2 text-center') Список пользователей
+  div(class='container')
+    div(class='row')
+      div(class='col-1 font-weight-bold') #
+      div(class='col font-weight-bold') Имя пользователя
+      div(class='col font-weight-bold') Пароль
+      div(class='col font-weight-bold') Имейл
+      div(class='col font-weight-bold') Описание
+      div(class='col font-weight-bold') Дата создания
+      div(class='col font-weight-bold') Дата обновления
+      div(class='col')
+
+    form(action='/user', method='post')
+      div(class='row p-2')
+        div(class='col-1')
+          input(name='id', class='form-control form-control-sm', disabled)
+        div(class='col')
+          input(name='username', class='form-control form-control-sm')
+        div(class='col')
+          input(name='password', class='form-control form-control-sm')
+        div(class='col')
+          input(name='email', class='form-control form-control-sm')
+        div(class='col')
+          input(name='desciption', class='form-control form-control-sm')
+        div(class='col')
+          input(name='createdAt', class='form-control form-control-sm', disabled)
+        div(class='col')
+          input(name='updatedAt', class='form-control form-control-sm', disabled)
+        div(class='col')
+          button(type='submit', class='btn btn-outline-success btn-sm') Добавить
+
+    each user, index in items
+      div(class='row p-2')
+        div(class='col-1') #{index}
+        div(class='col') #{user.Username}
+        div(class='col') #{user.Password}
+        div(class='col') #{user.Email}
+        div(class='col') #{user.Desciption}
+        div(class='col') #{user.createdAt}
+        div(class='col') #{user.updatedAt}
+        div(class='col')
+          div(class='form-group row')
+            form(action='/user/' + user.id + '/delete', method='post')
+              a(class='btn btn-outline-warning btn-sm', href='/user/' + user.id) Редактировать
+              div() &nbsp
+              button(type='submit', class='btn btn-outline-danger btn-sm') Удалить
+    else
+      div(class='row')
+        div(class='col text-center p-2') Нет данных

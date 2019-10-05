@@ -10,10 +10,10 @@ const passport = require('passport');
 const Ensure = require('connect-ensure-login');
 
 router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
-  Freq.find({}, function(err, freq){
+  Freq.find({}, function(err, items){
     if (err) console.log(err);
-    res.render('freqs', {
-      items: freq,
+    res.render('freq', {
+      items: items,
       path: req.baseUrl,
       login: req.user,
     });
@@ -21,9 +21,9 @@ router.get('/', Ensure.ensureLoggedIn(), function(req, res) {
 });
 
 router.get('/:id', function(req, res){
-  Freq.findById(req.params.id, function(err, freq){
+  Freq.findById(req.params.id, function(err, item){
     if (err) console.log(err);
-    res.render('freq', {item: freq})
+    res.render('freq-edt', {item: item})
   });
 });
 
@@ -34,14 +34,14 @@ router.post('/', function(req, res){
     Start: req.body.start * Math.pow(10,9),
     End: req.body.end * Math.pow(10,9),
     createdAt: Date.now()
-  }, function(err, freq){
+  }, function(err, item){
     if (err) console.log(err);
     res.redirect('/freq');
   });
 });
 
 router.post('/:id/delete', function(req, res){
-  Freq.findByIdAndDelete(req.params.id, function(err, freq){
+  Freq.findByIdAndDelete(req.params.id, function(err, item){
     if (err) console.log(err);
     res.redirect('/freq');
   });
@@ -52,7 +52,7 @@ router.post('/:id/put', function(req, res){
     Name: req.body.name,
     Desciption: req.body.desciption,
     updatedAt: Date.now()
-  }, function(err, freq){
+  }, function(err, item){
     if (err) console.log(err);
     res.redirect('/freq');
   });

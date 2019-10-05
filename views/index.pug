@@ -1,9 +1,10 @@
 extends layout
 
 block content
-  main(class='container')
+  main(class='container', id='app')
     //label() #{views}
     //label() #{url}
+    //div() {{ message }}
     form(class='form-horizontal')
       div(class='form-group')
         label(for='place', class='control-label') Название населенного пункта:
@@ -20,11 +21,21 @@ block content
         select(name='recv', class='form-control form-control-sm')
           each recv in recvs
             option(value=recv.id) #{recv.Name}
-      div(class='form-group')            
+      div(class='form-group')
         label(for='freq', class='control-label') Диапозон частот:
-        select(name='freq', class='form-control form-control-sm')
-          each freq in freqs
-            option(value=freq.id) #{freq.Name + ' (' + freq.Start / Math.pow(10,9) + ', ' + freq.End / Math.pow(10,9) + ')' }
+        div(class='input-group', v-if='bFreqSelect')
+          div(class='input-group-prepend')
+            div(class='input-group-text')
+              input(type='checkbox', v-on:click='onFreqClick')
+          select(name='freq', class='form-control form-control-sm')
+            each freq in freqs
+              option(value=freq.id) #{freq.Name + ' (' + freq.Start / Math.pow(10,9) + ', ' + freq.End / Math.pow(10,9) + ')' }
+        div(class='input-group', v-if='bFreqRange')
+            div(class='input-group-prepend')
+              div(class='input-group-text')
+                input(type='checkbox', v-on:click='onFreqClick')
+            input(type='text', aria-lavel='first', class='form-control form-control-sm')
+            input(type='text', aria-lavel='last', class='form-control form-control-sm')
       div(class='form-group')
         label(for='datetime') Дата:
         input(type='date', class='form-control', id='datetime')
@@ -77,4 +88,4 @@ block content
       div(class='form-group')
         label(for='relative-humidity') Относительная влажность, %.
         input(type='email', class='form-control', id='relative-humidity', placeholder='70')
-      button(type='submit', class='btn btn-primary') Отправить
+      //button(type='submit', class='btn btn-primary') Отправить
