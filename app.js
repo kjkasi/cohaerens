@@ -57,7 +57,17 @@ const freqRouter = require('./routes/freq');
 const dataRouter = require('./routes/data');
 const recvRouter = require('./routes/recv');
 
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+
 var app = express();
+
+const config = require('./webpack.config.js');
+const compiler = webpack(config);
+
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
