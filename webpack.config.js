@@ -17,8 +17,13 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
+            presets: [[
               '@babel/preset-env',
+              {
+                'corejs': 3,
+                'useBuiltIns': 'usage',
+                'debug': true
+              }],
               '@babel/preset-react'
             ],
             plugins: [

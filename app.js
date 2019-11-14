@@ -56,6 +56,7 @@ const syscomRouter = require('./routes/syscom');
 const freqRouter = require('./routes/freq');
 const dataRouter = require('./routes/data');
 const recvRouter = require('./routes/recv');
+const apiRouter = require('./routes/api');
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -102,6 +103,7 @@ app.use('/syscom', syscomRouter);
 app.use('/freq', freqRouter);
 app.use('/data', dataRouter);
 app.use('/recv', recvRouter);
+app.use('/api', apiRouter);
 
 /*
 app.get('/flash', function(req, res){

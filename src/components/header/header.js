@@ -17,6 +17,11 @@ export default class Header extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
                 <a className="nav-link"
+                   href="#">Главная
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link"
                    href="#">Места
                 </a>
               </li>
