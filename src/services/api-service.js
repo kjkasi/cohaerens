@@ -12,14 +12,17 @@ export default class ApiService {
     return await res.json();
   };
 
-  getAllPlace = async () => {
-    const res = await this.getResource(`/place/`);
-    return res.map((item) => {
+  getAllPlace = async (page = 1, perPage = 10) => {
+    const res = await this.getResource(`/place?page=${page}&perPage=${perPage}`);
+    return res;
+    /*
+    return res.result.map((item) => {
       return {
-        id: res.indexOf(item),
+        id: item._id,
         name: item.Name
       };
     });
+    */
   };
 
 };

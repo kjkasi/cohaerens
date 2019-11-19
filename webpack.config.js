@@ -22,7 +22,10 @@ module.exports = {
               {
                 'corejs': 3,
                 'useBuiltIns': 'usage',
-                'debug': true
+                'debug': true,
+                'targets': [
+                  'last 2 versions'
+                ]
               }],
               '@babel/preset-react'
             ],

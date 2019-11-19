@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './header.css';
 
@@ -16,14 +17,14 @@ export default class Header extends Component {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link"
-                   href="#">Главная
-                </a>
+                <Link to="/"
+                      className="nav-link">Главная
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link"
-                   href="#">Места
-                </a>
+                <Link to="/place/"
+                      className="nav-link">Места
+                </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link"
