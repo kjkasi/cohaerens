@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
 import AddItem from '../add-item';
 import RowItem from '../row-item';
+import { PlaceList } from '../hoc';
 
 import './item-list.css';
 
