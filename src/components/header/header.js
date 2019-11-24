@@ -17,12 +17,12 @@ export default class Header extends Component {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <Link to="/"
+                <Link to="/react"
                       className="nav-link">Главная
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/place/"
+                <Link to="/react/place/1"
                       className="nav-link">Места
                 </Link>
               </li>

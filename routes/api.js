@@ -32,10 +32,12 @@ router.get('/place', function(req, res) {
   query.skip(offset).limit(limit);
   query.exec(function(err, items){
     if (err) console.log(err);
-    const count = items.length;
-    res.json({
-      count: count,
-      result: items
+    Place.countDocuments({}, function (err, count) {
+      if (err) console.log(err);
+      res.json({
+        count: count,
+        result: items
+      });  
     });
   });
 });

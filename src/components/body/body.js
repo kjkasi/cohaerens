@@ -17,10 +17,12 @@ export default class Body extends Component {
 
     return (
       <Switch>
-        <Route path="/"
+        <Route path="/react"
                component={ Item }
                exact />
-        <Route path="/place" component={ PlaceList } />
+        {/*<Route path="/place" exact component={ PlaceList } />*/}
+        <Route path="/react/place/:id" 
+               component={ PlaceList } />
       </Switch>
     );
   };

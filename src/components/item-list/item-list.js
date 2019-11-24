@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import ApiService from '../../services/api-service';
 import AddItem from '../add-item';
 import RowItem from '../row-item';
-import { PlaceList } from '../hoc';
 
 import './item-list.css';
 
@@ -13,6 +12,8 @@ export default class ItemList extends Component {
 
   render() {
 
+    const { page } = this.props;
+ 
     return (
       <div>
         <h3 className="p-2 text-center">Список мест
@@ -28,7 +29,8 @@ export default class ItemList extends Component {
           </div>
           <AddItem />
           <RowItem
-            getData={ this.api.getAllPlace } />
+            getData={ this.api.getAllPlace }
+            page={ page } />
         </div>
       </div>
     );

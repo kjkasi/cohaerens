@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './row-item';
 
@@ -9,13 +10,14 @@ export default class RowItem extends Component {
   state = {
     items: null,
     count: 0,
-    page: 1,
-    perPage: 5
+    perPage: 10
   };
 
   componentDidMount() {
-    const { getData } = this.props;
-    const { page, perPage } = this.state;
+    const { getData, page } = this.props;
+    const { perPage } = this.state;
+
+    console.log('componentDidMount RowItem: ' + page);
 
     getData(page, perPage)
       .then((res) => {
@@ -24,6 +26,10 @@ export default class RowItem extends Component {
           count: res.count
         });
       });
+  };
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
   };
 
   renderItems(items) {
@@ -58,7 +64,7 @@ export default class RowItem extends Component {
 
   render() {
 
-    const { items } = this.state;
+    const { items, count, perPage } = this.state;
 
     if (!items) {
       return <Spinner />;
@@ -71,11 +77,33 @@ export default class RowItem extends Component {
         { itemList }
         <nav>
           <ul className="pagination">
+            {/*
             <li className="page-item"><a className="page-link" href="#">Previous</a></li>
             <li className="page-item"><a className="page-link" href="#">1</a></li>
             <li className="page-item"><a className="page-link" href="#">2</a></li>
             <li className="page-item"><a className="page-link" href="#">3</a></li>
             <li className="page-item"><a className="page-link" href="#">Next</a></li>
+            */}
+            <li className="page-item">
+              <Link className="page-link" to="/react/place/1">Первая
+              </Link>
+            </li>
+            <li className="page-item">
+              <a className="page-link" href="#">1
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link" href="#">2
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link" href="#">3
+              </a>
+            </li>
+            <li className="page-item">
+              <Link className="page-link" to={ '/react/place/' + Math.ceil(count / perPage) }>Последняя
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
