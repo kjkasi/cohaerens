@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import ApiService from '../../services/api-service';
-import {
-  Item,
-  PlaceList
-} from '../pages';
+import PlaceList from '../place-list';
+import MainItem from '../main-item';
 
 import './body.css';
 
@@ -18,11 +16,13 @@ export default class Body extends Component {
     return (
       <Switch>
         <Route path="/react"
-               component={ Item }
+               render={ () => {return <MainItem />}}
                exact />
-        {/*<Route path="/place" exact component={ PlaceList } />*/}
         <Route path="/react/place/:id" 
-               component={ PlaceList } />
+               render={({ match }) => {
+                const { id } = match.params;
+                return <PlaceList page={ id }/>
+               }} />
       </Switch>
     );
   };

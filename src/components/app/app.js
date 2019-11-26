@@ -13,7 +13,9 @@ export default class App extends Component {
         <Router>
           <div className="coha-app">
             <Header />
-            <Body />
+            <main className="container">
+              <Body />
+            </main>
             <Footer />
           </div>
         </Router>

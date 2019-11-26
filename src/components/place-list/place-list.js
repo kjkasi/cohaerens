@@ -4,9 +4,9 @@ import ApiService from '../../services/api-service';
 import AddItem from '../add-item';
 import RowItem from '../row-item';
 
-import './item-list.css';
+import './place-list.css';
 
-export default class ItemList extends Component {
+export default class PlaceList extends Component {
 
   api = new ApiService();
 
