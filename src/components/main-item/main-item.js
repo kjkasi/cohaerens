@@ -4,18 +4,41 @@ import './main-item.css';
 
 class MainItem extends Component {
 
+  fileReader;
+
   componentDidMount() {
     console.log('componentDidMount');
+    this.fileReader = new FileReader();
   };
 
   renderPlace(items) {
     console.log('');
   };
 
+  handleFileChosen = (e) => {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      console.log(evt.target.result);
+    };
+    reader.readAsText(e.target.files[0]);
+  };
+
   render () {
     return (
       <form className="form-horizontal">
        
+       <div className="form-group">
+          <label>Файл ПЭС</label>
+          <div className="input-group">
+            <div className="custom-file">
+              <input type="file"
+                     className="custom-file-input"
+                     onChange={ this.handleFileChosen } />
+              <label className="custom-file-label">Choose file</label>
+            </div>
+          </div>
+        </div>
+        {/*
         <div className="form-group">
           <label className="control-label">Название населенного пункта:</label>
           <select className="form-control form-control-sm">
@@ -53,16 +76,17 @@ class MainItem extends Component {
           </select>
         </div>
 
-        <label>Диапозон частот, Гц:</label>
-        <div className="form-row">
-          <div className="form-group col-xs-3">
-            <label >от</label>
-            <input type="text" className="form-control form-control-sm" placeholder="0" />
-          </div>
-          <div className="form-group col-xs-3">
-            <label >до</label>
-            <input type="text" className="form-control form-control-sm" placeholder="10 000 000" />
-          </div>
+        
+        <div className="form-group">
+          <label>Диапозон частот:</label>
+          <select className="form-control form-control-sm">
+            <option>L (1.452, 1.55)</option>
+            <option>S (1.93, 2.7)</option>
+            <option>C (3.4, 5.25)</option>
+            <option>X (7.255, 8.4)</option>
+            <option>Ku (10.7, 12.75)</option>
+            <option>Ka (15.4, 26.5)</option>
+          </select>
         </div>
                   
         <div className="form-group">
@@ -152,7 +176,8 @@ class MainItem extends Component {
             </div>
           </div>
         </div>
-        
+        */}
+
         <button type="submit" className="btn btn-primary">Отправить</button>
       </form>
     );
