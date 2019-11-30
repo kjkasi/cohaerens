@@ -2,28 +2,98 @@ import React, { Component } from 'react';
 
 import './main-item.css';
 
+import ApiService from '../../services/api-service';
+
 class MainItem extends Component {
 
-  fileReader;
+  api = new ApiService();
+
+  state = {
+    file: '',
+    filePath: null
+  };
 
   componentDidMount() {
-    console.log('componentDidMount');
-    this.fileReader = new FileReader();
+    //console.log('componentDidMount');
   };
 
   renderPlace(items) {
     console.log('');
   };
 
-  handleFileChosen = (e) => {
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      console.log(evt.target.result);
-    };
-    reader.readAsText(e.target.files[0]);
+  handleChange(e) {
+    this.setState({
+      file: e.target.value
+    });
   };
 
+  parseFile(file) {
+    const arr = file.split('#');
+    const created = arr[1].replace('Created on', '').trim();
+    const sources = arr[2].replace('Sources:', '').trim();
+    const satellite = arr[3].replace(' Satellite:', '').trim();
+    const interval = arr[4].replace('Interval:', '').trim();
+    const site = arr[5].replace('Site:', '').trim();
+    const position = arr[7].replace('Position (X, Y, Z):', '').trim();
+    const format = arr[8].replace('datetime format:', '').trim();
+    const columns = arr[9].replace('Columns:', '').trim();
+    const data = arr[10];
+    const rows = data.split('\n').map((row) => {
+      const item = {
+        tsn: row.substr(0, 11).trim(),
+        hour: row.substr(12, 14).trim(),
+        el: row.substr(27, 10).trim(),
+        az: row.substr(38, 11).trim(),
+        l1l2: row.substr(51, 21).trim(),
+        p1p2: row.substr(73, 10).trim(),
+        validity: row.substr(83, 7).trim()
+      };
+      return item;
+    });
+    //console.log(created, sources, satellite, interval, site, position, format, columns, rows);
+    const dat = {
+      created: created,
+      sources: sources,
+      satellite: satellite,
+      interval: interval,
+      site: site,
+      position: position,
+      format: format,
+      rows: rows.slice(1, 10)
+    };
+    console.log(dat);
+    this.api.postData(dat);
+  };
+
+  handleFileChosen = (e) => {
+
+    this.setState({
+      filePath: e.target.files[0].name
+    });
+
+    const reader = new FileReader();
+    /*
+    reader.onload = function(evt) {
+      //console.log(evt.target.result);
+      this.setState({
+        file: evt.target.result
+      });
+    }.bind(this);
+    */
+    reader.onload = (evt) => {
+      const result = evt.target.result;
+      this.parseFile(result);
+      this.setState({
+        file: result
+      });
+    };
+    reader.readAsText(e.target.files[0]);
+};
+
   render () {
+
+    const { file, filePath } = this.state;
+
     return (
       <form className="form-horizontal">
        
@@ -33,11 +103,20 @@ class MainItem extends Component {
             <div className="custom-file">
               <input type="file"
                      className="custom-file-input"
+                     accept="*.dat"
                      onChange={ this.handleFileChosen } />
-              <label className="custom-file-label">Choose file</label>
+              <label className="custom-file-label">
+                { filePath ? filePath : 'Выбрать файл' }
+              </label>
             </div>
           </div>
         </div>
+
+        <textarea className="form-control"
+                  value={ file }
+                  onChange={ this.handleChange }>
+        </textarea>
+
         {/*
         <div className="form-group">
           <label className="control-label">Название населенного пункта:</label>
@@ -177,8 +256,9 @@ class MainItem extends Component {
           </div>
         </div>
         */}
-
-        <button type="submit" className="btn btn-primary">Отправить</button>
+        <div className="input-group">
+          <button type="submit" className="btn btn-primary">Отправить</button>
+        </div>
       </form>
     );
   };

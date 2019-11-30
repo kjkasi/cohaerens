@@ -42,4 +42,9 @@ router.get('/place', function(req, res) {
   });
 });
 
+router.post('/test'), function(req, res) {
+  res.json({foo: 'foo', bar: 'bar'});
+  res.sendState(200);
+};
+
 module.exports = router;

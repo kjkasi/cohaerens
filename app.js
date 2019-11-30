@@ -113,6 +113,10 @@ app.get('/flash', function(req, res){
 });
 */
 
+app.post('/test'), function(req, res) {
+  res.sendState(200);
+};
+
 app.post('/login', 
   passport.authenticate('local', {  successRedirect: '/',
                                     failureRedirect: '/login'})
