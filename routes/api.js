@@ -7,6 +7,7 @@ const SysCom = mongoose.model('SysCom');
 const Freq = mongoose.model('Freq');
 const User = mongoose.model('User');
 const Recv = mongoose.model('Recv');
+const TEC = mongoose.model('TEC');
 
 /*
 router.get('/place', function(req, res) {
@@ -42,9 +43,22 @@ router.get('/place', function(req, res) {
   });
 });
 
-router.post('/test'), function(req, res) {
-  res.json({foo: 'foo', bar: 'bar'});
-  res.sendState(200);
-};
+router.post('/tec', function(req, res) {
+  //console.log(req.headers, req.body);
+  TEC.create({
+    created: req.body.created,
+    sourses: req.body.sourses,
+    satellite: req.body.satellite,
+    interval: req.body.interval,
+    site: req.body.site,
+    position: req.body.position,
+    format: req.body.format,
+    rows: [req.body.rows]
+  }, function(err, item){
+    if (err) console.log(err);
+    res.sendStatus(200);
+  });
+ //res.sendStatus(200);
+});
 
 module.exports = router;

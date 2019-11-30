@@ -16,6 +16,7 @@ require('./models/place');
 require('./models/syscom');
 require('./models/user');
 require('./models/recv');
+require('./models/tec');
 
 const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');
@@ -79,8 +80,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb', type: '*/*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.text());
 app.use(session({
   secret: 'mojietu',
   saveUninitialized: false,
@@ -112,10 +114,6 @@ app.get('/flash', function(req, res){
   res.redirect('/');
 });
 */
-
-app.post('/test'), function(req, res) {
-  res.sendState(200);
-};
 
 app.post('/login', 
   passport.authenticate('local', {  successRedirect: '/',

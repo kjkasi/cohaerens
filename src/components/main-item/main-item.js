@@ -9,25 +9,21 @@ class MainItem extends Component {
   api = new ApiService();
 
   state = {
-    file: '',
+    data: {},
     filePath: null
   };
 
-  componentDidMount() {
-    //console.log('componentDidMount');
+  handleChange = (e) => {
+    //
   };
 
-  renderPlace(items) {
-    console.log('');
+  handleSubmit = (e) => {
+    event.preventDefault();
+    this.api.postData(this.state.data);
+    //console.log('handleUpload');
   };
 
-  handleChange(e) {
-    this.setState({
-      file: e.target.value
-    });
-  };
-
-  parseFile(file) {
+  parseFile = (file) => {
     const arr = file.split('#');
     const created = arr[1].replace('Created on', '').trim();
     const sources = arr[2].replace('Sources:', '').trim();
@@ -60,9 +56,12 @@ class MainItem extends Component {
       position: position,
       format: format,
       rows: rows.slice(1, 10)
+      //rows: rows
     };
-    console.log(dat);
-    this.api.postData(dat);
+
+    this.setState({
+      data: dat
+    });;
   };
 
   handleFileChosen = (e) => {
@@ -72,30 +71,20 @@ class MainItem extends Component {
     });
 
     const reader = new FileReader();
-    /*
-    reader.onload = function(evt) {
-      //console.log(evt.target.result);
-      this.setState({
-        file: evt.target.result
-      });
-    }.bind(this);
-    */
+  
     reader.onload = (evt) => {
-      const result = evt.target.result;
-      this.parseFile(result);
-      this.setState({
-        file: result
-      });
+      this.parseFile(evt.target.result);
     };
     reader.readAsText(e.target.files[0]);
 };
 
   render () {
 
-    const { file, filePath } = this.state;
+    const { data, filePath } = this.state;
 
     return (
-      <form className="form-horizontal">
+      <form className="form-horizontal"
+            onSubmit= { this.handleSubmit } >
        
        <div className="form-group">
           <label>Файл ПЭС</label>
@@ -113,7 +102,7 @@ class MainItem extends Component {
         </div>
 
         <textarea className="form-control"
-                  value={ file }
+                  value={ data ? JSON.stringify(data) : '' }
                   onChange={ this.handleChange }>
         </textarea>
 
@@ -257,7 +246,9 @@ class MainItem extends Component {
         </div>
         */}
         <div className="input-group">
-          <button type="submit" className="btn btn-primary">Отправить</button>
+          <button type="submit" 
+                  className="btn btn-primary">Отправить
+          </button>
         </div>
       </form>
     );
