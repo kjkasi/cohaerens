@@ -55,8 +55,8 @@ class MainItem extends Component {
       site: site,
       position: position,
       format: format,
-      rows: rows.slice(1, 10)
-      //rows: rows
+      //rows: rows.slice(1, 10)
+      rows: rows
     };
 
     this.setState({

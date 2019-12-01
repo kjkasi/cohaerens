@@ -44,7 +44,8 @@ router.get('/place', function(req, res) {
 });
 
 router.post('/tec', function(req, res) {
-  //console.log(req.headers, req.body);
+  //console.log(req.headers, req.body, req.body.rows);
+  //res.sendStatus(200);
   TEC.create({
     created: req.body.created,
     sourses: req.body.sourses,
@@ -53,12 +54,11 @@ router.post('/tec', function(req, res) {
     site: req.body.site,
     position: req.body.position,
     format: req.body.format,
-    rows: [req.body.rows]
+    rows: req.body.rows
   }, function(err, item){
     if (err) console.log(err);
     res.sendStatus(200);
   });
- //res.sendStatus(200);
 });
 
 module.exports = router;

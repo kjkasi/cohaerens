@@ -18,12 +18,13 @@ export default class ApiService {
       {
         method: 'POST',
         mode: 'no-cors',
-        headers: {
+        //headers: {
           //'Content-Type': 'application/json'
           //'Content-Type': 'application/x-www-form-urlencoded',
           //'Content-Type': 'multipart/form-data'
           //'content-type': 'application/json;charset=UTF-8'
-        },
+          //'Content-Type': 'application/json'
+        //},
         body: JSON.stringify(data)
         //body: JSON.stringify({foo: 'bar'})
       });
