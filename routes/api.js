@@ -43,6 +43,13 @@ router.get('/place', function(req, res) {
   });
 });
 
+router.get('/tec', function(req, res) {
+  TEC.findOne({}, function(err, items){
+    if (err) console.log(err);
+    res.json(items);
+  });
+});
+
 router.post('/tec', function(req, res) {
   //console.log(req.headers, req.body, req.body.rows);
   //res.sendStatus(200);

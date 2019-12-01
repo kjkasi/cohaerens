@@ -9,7 +9,7 @@ export default class ApiService {
       throw new Error(`Could not fetch ${url}` +
         `, received ${res.status}`);
     }
-    return res.json();
+    return await res.json();
   };
 
   postResource = async (url, data) => {
@@ -28,20 +28,17 @@ export default class ApiService {
         body: JSON.stringify(data)
         //body: JSON.stringify({foo: 'bar'})
       });
-    return res;
+    return await res;
   };
 
   getAllPlace = async (page = 1, perPage = 10) => {
     const res = await this.getResource(`/place?page=${page}&perPage=${perPage}`);
     return res;
-    /*
-    return res.result.map((item) => {
-      return {
-        id: item._id,
-        name: item.Name
-      };
-    });
-    */
+  };
+
+  getTEC = async () => {
+    const res = await this.getResource('/tec');
+    return res;
   };
 
   postData = async (data) => {

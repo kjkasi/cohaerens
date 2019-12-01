@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './main-item.css';
 
 import ApiService from '../../services/api-service';
+import { Line } from 'react-chartjs-2';
 
 class MainItem extends Component {
 
@@ -10,8 +11,48 @@ class MainItem extends Component {
 
   state = {
     data: {},
-    filePath: null
+    filePath: null,
+    recs: {}
   };
+
+  /*
+  componentDidMount() {
+    this.api.getTEC().then((res) => {
+
+      const tec = {
+        datasets: [
+          {
+            label: res.created,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: res.rows.map((el) => {
+              return el.l1l2;
+            })
+          }
+        ]
+      };
+
+      this.setState({
+        tec: tec
+      });
+    });
+  };
+  */
 
   handleChange = (e) => {
     //
@@ -47,7 +88,7 @@ class MainItem extends Component {
       return item;
     });
     //console.log(created, sources, satellite, interval, site, position, format, columns, rows);
-    const dat = {
+    const tec = {
       created: created,
       sources: sources,
       satellite: satellite,
@@ -59,9 +100,44 @@ class MainItem extends Component {
       rows: rows
     };
 
+    var recs = data.split('\n').map((row) => {
+      return parseInt(row.substr(51, 21).trim());
+    });
+
+    recs.splice(0, 1);
+
+    console.log('recs: ', recs);
+
     this.setState({
-      data: dat
-    });;
+      data: tec,
+      recs: {
+        labels: [ ...Array(recs.length).keys()],
+        datasets: [
+          {
+            label: satellite,
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            //data: [65, 59, 80, 81, 56, 55, 40]
+            data: recs
+          }
+        ]
+      }
+    });
   };
 
   handleFileChosen = (e) => {
@@ -80,7 +156,9 @@ class MainItem extends Component {
 
   render () {
 
-    const { data, filePath } = this.state;
+    const { data, filePath, recs } = this.state;
+
+    //console.log(recs);
 
     return (
       <form className="form-horizontal"
@@ -105,6 +183,8 @@ class MainItem extends Component {
                   value={ data ? JSON.stringify(data) : '' }
                   onChange={ this.handleChange }>
         </textarea>
+
+        <Line data={ recs } />
 
         {/*
         <div className="form-group">
