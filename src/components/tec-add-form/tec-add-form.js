@@ -11,13 +11,21 @@ class TecAddForm extends Component {
   api = new ApiService();
 
   state = {
-    tec: {},
+    tec: {
+      created: '',
+      satellite: '',
+      site: '',
+      position: '',
+      rows: []
+    },
     filePath: null,
+    success: false
   };
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.api.postData(this.state.tec);
+    const res = this.api.postData(this.state.tec);
+    console.log(res);
   };
 
   parseFile = (file) => {
@@ -79,15 +87,28 @@ class TecAddForm extends Component {
     reader.readAsText(e.target.files[0]);
   };
 
+  renderAlert(text, success) {
+    if (success) {
+      return (
+        <div className="alert alert-success" role="alert">
+          { text }
+        </div>
+      );
+    }
+  };
+
   render () {
 
-    const { id, created, satellite, site, position } = this.state;
-    const { tec, filePath, recs } = this.state;
+    const { tec, filePath, success } = this.state;
+    const { created, satellite, site, position } = tec;
+
+    const alert = this.renderAlert('Файл ПЭС усешно загружен!', success);
 
     return (
       <div>
         <h3 className="p-2 text-center">Добавление ПЭС</h3>
         <div className="container">
+          { alert }
           <form className="form-horizontal"
                 onSubmit= { this.onSubmit }>
             <div className="form-group">
@@ -106,19 +127,19 @@ class TecAddForm extends Component {
             </div>
             <div className="form-group">
               <label>Created</label>
-              <label className="form-control form-control-sm">{ tec.created }</label>
+              <label className="form-control form-control-sm">{ created }</label>
             </div>
             <div className="form-group">
               <label>Satellite</label>
-              <label className="form-control form-control-sm">{ tec.satellite }</label>
+              <label className="form-control form-control-sm">{ satellite }</label>
             </div>
             <div className="form-group">
               <label>Site</label>
-              <label className="form-control form-control-sm">{ tec.site }</label>
+              <label className="form-control form-control-sm">{ site }</label>
             </div>
             <div className="form-group">
               <label>Position(X, Y, Z)</label>
-              <label className="form-control form-control-sm">{ tec.position }</label>
+              <label className="form-control form-control-sm">{ position }</label>
             </div>
             <div className="form-group">
               <label>График</label>

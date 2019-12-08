@@ -53,7 +53,7 @@ class TecEditForm extends Component {
         </div>
       );
     }
-  }
+  };
 
   render () {
 

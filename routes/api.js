@@ -30,7 +30,7 @@ router.get('/place', function(req, res) {
   });
 });
 
-router.get('/teclist', function(req, res) {
+router.get('/tec/list', function(req, res) {
 
   const page = Number(req.query.page);
   const perPage = Number(req.query.perPage);

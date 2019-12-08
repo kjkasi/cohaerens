@@ -14,7 +14,7 @@ class TecList extends Component {
   state = {
     items: null,
     count: null,
-    perPage: 10,
+    perPage: 5,
     page: null
   };
   
