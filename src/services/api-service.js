@@ -18,15 +18,7 @@ export default class ApiService {
       {
         method: 'POST',
         mode: 'no-cors',
-        //headers: {
-          //'Content-Type': 'application/json'
-          //'Content-Type': 'application/x-www-form-urlencoded',
-          //'Content-Type': 'multipart/form-data'
-          //'content-type': 'application/json;charset=UTF-8'
-          //'Content-Type': 'application/json'
-        //},
         body: JSON.stringify(data)
-        //body: JSON.stringify({foo: 'bar'})
       });
     return await res;
   };
@@ -36,10 +28,15 @@ export default class ApiService {
     return res;
   };
 
-  getTEC = async () => {
-    const res = await this.getResource('/tec');
+  getTecList = async (page = 1, perPage = 10) => {
+    const res = await this.getResource('/teclist');
     return res;
   };
+
+  getTec = async (id) => {
+    const res = await this.getResource(`/tec/${id}`);
+    return res;
+  }
 
   postData = async (data) => {
     const res = await this.postResource('/tec', data);

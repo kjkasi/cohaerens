@@ -9,19 +9,6 @@ const User = mongoose.model('User');
 const Recv = mongoose.model('Recv');
 const TEC = mongoose.model('TEC');
 
-/*
-router.get('/place', function(req, res) {
-  Place.find({}, function(err, items){
-    if (err) console.log(err);
-    const count = items.length;
-    res.json({
-      count: count,
-      result: items
-    });
-  });
-});
-*/
-
 router.get('/place', function(req, res) {
 
   const page = Number(req.query.page);
@@ -43,16 +30,35 @@ router.get('/place', function(req, res) {
   });
 });
 
-router.get('/tec', function(req, res) {
-  TEC.findOne({}, function(err, items){
+router.get('/teclist', function(req, res) {
+
+  const page = Number(req.query.page);
+  const perPage = Number(req.query.perPage);
+  const offset = (page - 1) * perPage;
+  const limit = perPage;
+
+  const query = TEC.find({});
+  query.skip(offset).limit(limit);
+  query.exec(function(err, items){
     if (err) console.log(err);
-    res.json(items);
+    TEC.countDocuments({}, function (err, count) {
+      if (err) console.log(err);
+      res.json({
+        count: count,
+        result: items
+      });  
+    });
+  });
+});
+
+router.get('/tec/:id', function(req, res) {
+  TEC.findById(req.params.id, function(err, item) {
+    if (err) console.log(err);
+    res.json(item);
   });
 });
 
 router.post('/tec', function(req, res) {
-  //console.log(req.headers, req.body, req.body.rows);
-  //res.sendStatus(200);
   TEC.create({
     created: req.body.created,
     sourses: req.body.sourses,

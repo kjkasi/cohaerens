@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import './header.css';
 
@@ -18,11 +18,22 @@ export default class Header extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
                 <Link to="/react"
-                      className="nav-link">Главная
+                         className="nav-link">Главная
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/react/place/1"
+                <Link to="/react/tec/1/list"
+                      className="nav-link">ПЭС
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="#"
+                      className="nav-link">Вариации
+                </Link>
+              </li>
+              {/*
+              <li className="nav-item">
+                <Link to="/react/placelist/1"
                       className="nav-link">Места
                 </Link>
               </li>
@@ -46,8 +57,10 @@ export default class Header extends Component {
                    href="#">Приемники
                 </a>
               </li>
+              */}
             </ul>
           </div>
+          {/*
           <form className="form-inline"
                 action="#"
                 method="get">
@@ -55,7 +68,7 @@ export default class Header extends Component {
                     type="submit">Войти
             </button>
           </form>
-          
+          */}
       </nav>
     );
   };
