@@ -17,6 +17,7 @@ require('./models/syscom');
 require('./models/user');
 require('./models/recv');
 require('./models/tec');
+require('./models/research');
 
 const Place = mongoose.model('Place');
 const SysCom = mongoose.model('SysCom');

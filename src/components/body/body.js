@@ -7,6 +7,7 @@ import MainItem from '../main-item';
 import TecList from '../tec-list';
 import TecAddForm from '../tec-add-form';
 import TecEditForm from '../tec-edit-form';
+import ResearchList from '../research-list';
 
 import './body.css';
 
@@ -21,6 +22,7 @@ export default class Body extends Component {
         <Route path="/react"
                render={ () => { return <MainItem /> }}
                exact />
+        {/* TEC */}
         <Route path="/react/tec/:id/list"
                render={({ match }) => {
                  const { id } = match.params;
@@ -33,11 +35,19 @@ export default class Body extends Component {
                  const { id } = match.params;
                  return <TecEditForm tecId= { id } />
                }} />
+        {/* Research */}
+        <Route path="/react/research/:id/list"
+               render={({ match }) => {
+                 const { id } = match.params;
+                 return <ResearchList page={ id }/>
+               }} />
+        {/*
         <Route path="/react/placelist/:id"
                render={({ match }) => {
                  const { id } = match.params;
                  return <PlaceList page={ id }/>
                }} />
+        */}
       </Switch>
     );
   };

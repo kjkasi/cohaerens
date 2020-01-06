@@ -31,6 +31,11 @@ export default class Header extends Component {
                       className="nav-link">Вариации
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to="/react/research/1/list"
+                      className="nav-link">Исследования
+                </Link>
+              </li>
               {/*
               <li className="nav-item">
                 <Link to="/react/placelist/1"

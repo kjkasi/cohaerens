@@ -38,6 +38,16 @@ export default class ApiService {
     return res;
   }
 
+  getResearchList = async (page = 1, perPage = 10) => {
+    const res = await this.getResource(`/research/list?page=${page}&perPage=${perPage}`);
+    return res;
+  };
+
+  getResearch = async (id) => {
+    const res = await this.getResource(`/research/${id}`);
+    return res;
+  }
+
   postData = async (data) => {
     const res = await this.postResource('/tec', data);
     console.log(res);
