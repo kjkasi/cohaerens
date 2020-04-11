@@ -16,53 +16,28 @@ export default class Header extends Component {
           </button>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <Link to="/react"
-                         className="nav-link">Главная
-                </Link>
+              <li className="nav-item">
+                <NavLink to="/react" exact
+                          className="nav-link">Главная
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link to="/react/tec/1/list"
-                      className="nav-link">ПЭС
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="#"
-                      className="nav-link">Вариации
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/react/research/1/list"
-                      className="nav-link">Исследования
-                </Link>
+                <NavLink to="/react/tec/1/list"
+                        className="nav-link">ПЭС
+                </NavLink>
               </li>
               {/*
               <li className="nav-item">
-                <Link to="/react/placelist/1"
-                      className="nav-link">Места
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link"
-                   href="#">Системы связи
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link"
-                   href="#">Частотные диапазоны
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link"
-                   href="#">Пользователи
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link"
-                   href="#">Приемники
-                </a>
+                <NavLink to="#"
+                        className="nav-link">Вариации
+                </NavLink>
               </li>
               */}
+              <li className="nav-item">
+                <NavLink to="/react/research/1/list"
+                      className="nav-link">Исследования
+                </NavLink>
+              </li>
             </ul>
           </div>
           {/*
